@@ -3,7 +3,6 @@
 <head>
     <title>Login/Register Example</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
     <div class="container mt-5">
@@ -36,34 +35,53 @@
 
     <script>
         // Handle login form submission
-        $('#login-form').submit(function(event) {
+        document.getElementById('login-form').addEventListener('submit', function(event) {
             event.preventDefault();
-            var username = $('#login-username').val();
-            var password = $('#login-password').val();
+            var username = document.getElementById('login-username').value;
+            var password = document.getElementById('login-password').value;
             // Send login request to server
-            $.post('/token', {username: username, password: password})
-            .done(function(response) {
-                alert('Login successful! Token: ' + response.token);
+            fetch('/token', {
+                method: 'POST',
+                body: JSON.stringify({username: username, password: password}),
+                headers: {'Content-Type': 'application/json'}
+            })
+            .then(function(response) {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Login failed. Please try again.');
+                }
+            })
+            .then(function(data) {
+                alert('Login successful! Token: ' + data.token);
                 // Redirect to protected page or perform other actions
             })
-            .fail(function(error) {
-                alert('Login failed. Please try again.');
+            .catch(function(error) {
+                alert(error.message);
             });
         });
 
         // Handle register form submission
-        $('#register-form').submit(function(event) {
+        document.getElementById('register-form').addEventListener('submit', function(event) {
             event.preventDefault();
-            var username = $('#register-username').val();
-            var password = $('#register-password').val();
+            var username = document.getElementById('register-username').value;
+            var password = document.getElementById('register-password').value;
             // Send register request to server
-            $.post('/register', {username: username, password: password})
-            .done(function(response) {
-                alert('Registration successful! Please login.');
-                // Redirect to login page or perform other actions
+            fetch('/register', {
+                method: 'POST',
+                body: JSON.stringify({username: username, password: password}),
+                headers: {'Content-Type': 'application/json'}
             })
-            .fail(function(error) {
-                alert('Registration failed. Please try again.');
+            .then(function(response) {
+                if (response.ok) {
+                    alert('Registration successful! Please login.');
+                    // Redirect to login page or perform other actions
+                } else {
+                    throw new Error('Registration failed. Please try again.');
+                }
+            })
+            .catch(function(error) {
+                alert(error.message);
             });
         });
     </script>

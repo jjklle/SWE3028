@@ -4,7 +4,6 @@ from pydantic import BaseModel
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi import APIRouter
-import json
 
 app = FastAPI()
 
@@ -33,11 +32,9 @@ async def root(request: Request):
 
 # Route to register a new user
 @app.post("/register")
-def register(user_dict: dict):
+def register(user: UserRegister):
     # Check if username already exists
-    user = UserRegister()
-    user.password = user_dict["password"]
-    user.username = user_dict["username"]
+    
     for u in users_db:
         if u['username'] == user.username:
             raise HTTPException(status_code=400, detail="Username already exists")
