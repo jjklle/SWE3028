@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login/Register Example</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Login</h2>
+        <form id="login-form">
+            <div class="form-group">
+                <label for="login-username">Username</label>
+                <input type="text" class="form-control" id="login-username" placeholder="Enter username">
+            </div>
+            <div class="form-group">
+                <label for="login-password">Password</label>
+                <input type="password" class="form-control" id="login-password" placeholder="Password">
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+        <hr>
+        <h2>Register</h2>
+        <form id="register-form">
+            <div class="form-group">
+                <label for="register-username">Username</label>
+                <input type="text" class="form-control" id="register-username" placeholder="Enter username">
+            </div>
+            <div class="form-group">
+                <label for="register-password">Password</label>
+                <input type="password" class="form-control" id="register-password" placeholder="Password">
+            </div>
+            <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+    </div>
+
+    <script>
+        // Handle login form submission
+        $('#login-form').submit(function(event) {
+            event.preventDefault();
+            var username = $('#login-username').val();
+            var password = $('#login-password').val();
+            // Send login request to server
+            $.post('/token', {username: username, password: password})
+            .done(function(response) {
+                alert('Login successful! Token: ' + response.token);
+                // Redirect to protected page or perform other actions
+            })
+            .fail(function(error) {
+                alert('Login failed. Please try again.');
+            });
+        });
+
+        // Handle register form submission
+        $('#register-form').submit(function(event) {
+            event.preventDefault();
+            var username = $('#register-username').val();
+            var password = $('#register-password').val();
+            // Send register request to server
+            $.post('/register', {username: username, password: password})
+            .done(function(response) {
+                alert('Registration successful! Please login.');
+                // Redirect to login page or perform other actions
+            })
+            .fail(function(error) {
+                alert('Registration failed. Please try again.');
+            });
+        });
+    </script>
+</body>
+</html>
