@@ -12,6 +12,8 @@
   <link rel="stylesheet" href="magnific-popup/magnific-popup.css">
   <link rel="stylesheet" href="css/bootstrap.min.css" />
   <link rel="stylesheet" href="css/templatemo-style.css" />
+  <link rel="stylesheet" href="css/login-popup.css" />
+
   <!--
 	The Town
 	https://templatemo.com/tm-525-the-town
@@ -47,7 +49,10 @@
             </div>
             <div class="navbar-nav item"></div>
             <li class="nav-item">
-              <a class="nav-link tm-nav-link" href="login.html">Login</a>
+              <a class="nav-link tm-nav-link" href="#" id="login-btn">Login</a>
+            </li>
+            <li>
+              <button id="register-btn">Register</button>
             </li>
             </div>
 
@@ -68,6 +73,22 @@
     </div>
 
   </section>
+
+  <!--Login and Register-->
+  <div id="login-modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2></h2>
+      <form>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username"><br><br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password"><br><br>
+        <input type="submit" value="Submit">
+      </form>
+    </div>
+  </div>
+
   <!--
     <section id="introduction" class="tm-section-pad-top">
       <div class="container">
@@ -398,6 +419,8 @@
   <script src="magnific-popup/jquery.magnific-popup.min.js"></script>
   <script src="js/jquery.singlePageNav.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
+  <script src="js/login-script.js"></script>
+
   <script>
 
     function getOffSet() {
