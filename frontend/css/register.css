@@ -30,8 +30,8 @@ input[type=text], input[type=password] {
     box-sizing: border-box;
 }
 
-button[type=submit] {
-    background-color: #4CAF50;
+button[type=button] {
+    background-color: #FF9486;
     color: white;
     padding: 14px 20px;
     margin: 8px 0;
@@ -41,6 +41,7 @@ button[type=submit] {
     width: 100%;
 }
 
-button[type=submit]:hover {
-    background-color: #45a049;
+button[type=button]:hover {
+    background-color: #ff1e00;
+    transition: 0.5s;
 }

@@ -1,0 +1,41 @@
+* {
+box-sizing: border-box;
+}
+
+body {
+	background-color: #e6e6e6;
+	color: #000000;
+	font-family: Arial, sans-serif;
+}
+
+header {
+	background-color: #FF9486;
+	height: 50px;
+	padding: 10px;
+}
+
+h1 {
+	font-size: 24px;
+    color: #ffffff;
+	margin: 0;
+}
+
+main {
+	margin: 50px auto;
+	max-width: 800px;
+	text-align: center;
+}
+
+button {
+display: inline-block;
+margin-top: 20px;
+padding: 10px 30px;
+background-color: #FF9486;
+color: white;
+font-size: 16px;
+font-weight: bold;
+text-align: center;
+text-decoration: none;
+border-radius: 5px;
+cursor: pointer;
+}
