@@ -296,6 +296,22 @@ a:focus {
   margin: 0 15px;
 }
 
+.content-title{
+  padding:5px 2px;
+  background-color: white;
+  color:#333;
+  text-align:left;
+  font-weight:700;
+}
+
+.content-description{
+  padding:0px 2px;
+  background-color: white;
+  text-align:left;
+  color:#454545;
+  font-size:0.8rem;
+}
+
 .slick-dots {
   bottom: -65px;
 }

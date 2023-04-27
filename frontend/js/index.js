@@ -97,6 +97,14 @@ fetch(url)
             image.src = item.url;
             image.alt = item.alt;
 
+            title = document.createElement('div');
+            div.classList.add("content-title");
+            div.innerHTML = item.title;
+
+            desc = document.createElement("div");
+            div.classList.add("content-description");
+            div.innerHTML = item.desc;
+
             figure.appendChild(image);
             link.appendChild(figure);
             container.appendChild(link);
