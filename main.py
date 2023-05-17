@@ -17,9 +17,13 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 def get_login_form(request: Request):
     return templates.TemplateResponse('login.html', context={'request':request})
 
-@app.get('/register')
-def get_login_form(request: Request):
-    return templates.TemplateResponse('register.html', context={'request':request})
+# @app.get('/register')
+# def get_register_form(request: Request):
+#     return templates.TemplateResponse('register.html', context={'request':request})
+
+@app.get('/register/preference')
+def get_preference_form(request: Request):
+    return templates.TemplateResponse('preference.html', context={'request':request})
 
 @app.get("/")
 async def get_home(request: Request):

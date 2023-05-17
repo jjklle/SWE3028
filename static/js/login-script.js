@@ -137,6 +137,7 @@ async function registerSubmit(event) {
         const data = await response.json();
         alert(data.message);
         registerModal.style.display = "none"; //등록 성공하면 모달 닫히게
+        // open preference page
         return data
     }
   }

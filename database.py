@@ -1,7 +1,7 @@
 from sqlalchemy import *
 from sqlalchemy.orm import sessionmaker
 
-DB_URL = 'mysql+pymysql://root:qlqjsanjsl1@localhost:3306/capstone'
+DB_URL = 'mysql+pymysql://root:2EYqFjKMMwfB@127.0.0.1:3306/capstone'
 
 class engineconn:
 
