@@ -29,7 +29,7 @@ $ uvicorn main:app --reload
 
 <cf)phpmyadmin 접속 방법 (테이블 생성/수정/조회 가능)>
 
-1.  KEYFILE 다운
+1. KEYFILE 다운
 2. KEYFILE 권한 변경
 
 (1,2는 위 방법과 동일, 위에서 이미 했다면 스킵 가능)
