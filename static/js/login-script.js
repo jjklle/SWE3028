@@ -2,14 +2,22 @@
 const loginBtn = document.getElementById("login-btn");
 const loginModal = document.getElementById("login-modal");
 const closeBtn = document.getElementsByClassName("close")[0];
+const closeBtn_reg = document.getElementsByClassName("close")[1];
+
 const registerBtn = document.getElementById("register-btn");
 const registerModal = document.getElementById("register-modal");
 
 loginBtn.onclick = function () {
+    if (registerModal.style.display !== null) {
+        registerModal.style.display = "none";
+    }
     loginModal.style.display = "block";
 };
 
 registerBtn.onclick = function () {
+    if (loginModal.style.display !== null) {
+        loginModal.style.display = "none";
+    }
     registerModal.style.display = "block";
 };
 
@@ -18,7 +26,10 @@ closeBtn.onclick = function () {
     if (loginModal !== null){
         loginModal.style.display = "none";    
     }
-    else if (registerModal !== null) {    
+};
+
+closeBtn_reg.onclick = function () {
+    if (registerModal !== null) {
         registerModal.style.display = "none";
     }
 };
