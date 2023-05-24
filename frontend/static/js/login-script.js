@@ -60,20 +60,11 @@ function encryptData(data, key) {
 async function loginSubmit(event) {
   event.preventDefault();
   
-  // ID와 PW를 가져와서 암호화
   const username = document.getElementById('login-username').value;
-  const password = document.getElementById('login-password').value;
-  //const key = await crypto.subtle.generateKey({name: 'AES-GCM', length: 256}, true, ['encrypt']);
-  //const encryptedUsername = await encryptData(username, key);
-  //const encryptedPassword = await encryptData(password, key);
-  // 암호화된 데이터를 서버로 전송
   const formData = new FormData();
-
   formData.append('username',username)
   formData.append('password',password)
-  //formData.append('username', new Blob([encryptedUsername], {type: 'application/octet-stream'}));
-  //formData.append('password', new Blob([encryptedPassword], {type: 'application/octet-stream'}));
-  //비밀번호 암호화는 백앤드쪽에서 하겠습니다.
+
 
   const response = await fetch('/login', {method: 'POST', body: formData});
   
@@ -136,8 +127,9 @@ async function registerSubmit(event) {
     else {
         const data = await response.json();
         alert(data.message);
-        registerModal.style.display = "none"; //등록 성공하면 모달 닫히게
+        registerModal.style.display = "none"; // 등록 성공하면 모달 닫히게
         // open preference page
+        
         return data
     }
   }

@@ -10,12 +10,12 @@ from routers import user
 app = FastAPI()
 app.include_router(user.router)
 
-templates = Jinja2Templates(directory='templates')
-app.mount("/static", StaticFiles(directory="static"), name="static") 
+templates = Jinja2Templates(directory='frontend/templates')
+app.mount("/frontend/static", StaticFiles(directory="frontend/static"), name="static") 
 
-@app.get('/login')
-def get_login_form(request: Request):
-    return templates.TemplateResponse('login.html', context={'request':request})
+# @app.get('/login')
+# def get_login_form(request: Request):
+#     return templates.TemplateResponse('login.html', context={'request':request})
 
 # @app.get('/register')
 # def get_register_form(request: Request):
