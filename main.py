@@ -9,12 +9,24 @@ from starlette import status
 from routers import user
 from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
+import os
 
 app = FastAPI()
 app.include_router(user.router)
 
 templates = Jinja2Templates(directory='templates')
 app.mount("/static", StaticFiles(directory="static"), name="static")
+
+#recbole 실행
+os.chdir("./RecBole")
+user_id = 1
+os.system(f"python ./predict.py --u_id={user_id}")
+
+f = open("./recommend_ls.txt", "r")
+string = f.readline()
+recommend_ls = list(map(int, string.split()))
+print(recommend_ls)
+os.chdir("../")
 
 # @app.get('/login')
 # def get_login_form(request: Request):
