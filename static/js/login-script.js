@@ -1,4 +1,4 @@
-
+/*=== Modal functions ===*/
 // 로그인 버튼 클릭 시 모달 팝업 열기
 const loginBtn = document.getElementById("login-btn");
 const loginModal = document.getElementById("login-modal");
@@ -47,6 +47,49 @@ window.onclick = function (event) {
 
 
 
+/*===Login===*/
+// Store user information into local storage
+function storeUserInfo(token, _username, _is_login) {
+    const user_info = {
+        access_token: token,
+        username: _username,
+        is_login: _is_login // "True" or "False"
+    }
+    window.localStorage.setItem('user_info',JSON.stringify(user_info));
+}
+
+// Function to update the navigation bar after login
+function updateNavbarAfterLogin() {
+    // Remove the login button
+    const loginButton = document.getElementById("login-btn");
+    if (loginButton) {
+        loginButton.remove();
+    }
+
+    // Remove the register button
+    const registerButton = document.getElementById("register-btn");
+    if (registerButton) {
+        registerButton.remove();
+    }
+
+    //const userInfoElement = document.createElement("div");
+    //userInfoElement.textContent = `Welcome, ${username}`;
+    //userInfoElement.classList.add("nav-link","tm-nav-link");
+    
+    // Create a new image element
+    const userImageElement = document.createElement("img");
+    userImageElement.src = "/static/img/icons8-user-64.png";
+    userImageElement.alt = "User Image";
+    userImageElement.id = 'user-image';
+
+    // Append the image element to the navbar
+    const navbar = document.getElementById("navbarSupportedContent");
+    if (navbar) {
+        navbar.appendChild(userImageElement);
+    }
+}
+
+
 // login
 // 폼 제출 시에 실행될 함수 
 async function loginSubmit(event) {
@@ -70,17 +113,11 @@ async function loginSubmit(event) {
         alert('Login successful! Token: ' + data.token);
         loginModal.style.display = "none"; // 로그인 성공하면 로그인 모달 닫히게
         
-        // local storage
-        // access_token, username, is_login
-        const user_info = {
-            access_token: data.token,
-            username: username,
-            is_login: "True"
-        }
-        window.localStorage.setItem('user_info', JSON.stringify(user_info));        
-
+        storeUserInfo(data.token,username,"True");       
+      
         // remove register & login button
         // and show user information
+        updateNavbarAfterLogin();
         
         // send request to server->get recommendation lists
         const response2 = fetch('/recommend',{ method: 'POST',body: JSON.stringify(username) });
@@ -92,7 +129,39 @@ async function loginSubmit(event) {
     }
 }
 
+/*===Authetication===*/
+function authenticate() {
+    const storage = localStorage.getItem('user_info');
+    const user_info = JSON.parse(storage);
+    if (user_info) { // if exists
+        try {
+            alert("a");
 
+            // Verify and decode the JWT token
+            const decodedToken = jwt_decode(user_info["access_token"]);
+            alert(decodedToken);
+            // Check if the token is expired
+            const currentTime = Date.now() / 1000; // Convert to seconds
+            if (decodedToken.exp < currentTime) {
+                // Token is expired
+            } else {
+                // Token is valid
+                updateNavbarAfterLogin();
+            }
+        } catch (error) {
+            // Failed to decode or verify the token
+        }
+    } else {
+        // Token is not found, perform necessary actions for a non-logged-in user
+    }
+}
+window.addEventListener("load",() => {
+    authenticate();
+
+});
+
+
+/*===Register===*/
 async function registerSubmit(event) {
     event.preventDefault();
 
@@ -141,12 +210,7 @@ async function registerSubmit(event) {
         registerModal.style.display = "none"; // 등록 성공하면 모달 닫히게
         
         // localstorage
-        const user_info = {
-            access_token: data.token,
-            username: username,
-            is_login: "True"
-        }
-        window.localStorage.setItem('user_info',JSON.stringify(user_info));        
+        storeUserInfo(data.token,username,"True");       
 
         // open preference page
         try {

@@ -171,6 +171,11 @@ a:focus {
   transform: translateY(0);
 }
 
+#user-image{
+  width:40px;
+}
+
+
 /* Hero */
 
 #hero {
