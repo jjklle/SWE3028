@@ -130,16 +130,33 @@ async function loginSubmit(event) {
 }
 
 /*===Authetication===*/
+// function parseJwt(token) {
+//     var base64Url = token.split('.')[1];
+//     var base64 = base64Url.replace(/-/g,'+').replace(/_/g,'/');
+//     var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
+//         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+//     }).join(''));
+
+//     return JSON.parse(jsonPayload);
+// }
+function parseJwt(jwt) {
+    var token = jwt.split(".")[1];
+    return JSON.parse(atob(token));
+}
+
+//test
+// const storage = localStorage.getItem('user_info');
+// const user_info = JSON.parse(storage);
+// const decodedToken = parseJwt(user_info["access_token"]);
+// console.log(decodedToken);
+
 function authenticate() {
     const storage = localStorage.getItem('user_info');
     const user_info = JSON.parse(storage);
     if (user_info) { // if exists
         try {
-            alert("a");
-
             // Verify and decode the JWT token
-            const decodedToken = jwt_decode(user_info["access_token"]);
-            alert(decodedToken);
+            const decodedToken = parseJwt(user_info["access_token"]);
             // Check if the token is expired
             const currentTime = Date.now() / 1000; // Convert to seconds
             if (decodedToken.exp < currentTime) {
@@ -157,7 +174,6 @@ function authenticate() {
 }
 window.addEventListener("load",() => {
     authenticate();
-
 });
 
 
