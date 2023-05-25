@@ -23,10 +23,10 @@ import argparse
 def load_example(user_id):
     # Filtered dataset and split dataloaders are created according to 'config'.
     config, model, dataset, train_data, valid_data, test_data = load_data_and_model(
-        model_file="./saved/BPR-Apr-26-2023_21-07-39.pth",
+        model_file="./saved/BPR_add2865.pth",
     )
     # user_ls = [i for i in range(1,2887)]
-    topk_score, topk_iid_list = full_sort_topk([user_id], model, test_data, k=10, device=config['device'])
+    topk_score, topk_iid_list = full_sort_topk([user_id], model, test_data, k=10000, device=config['device'])
     # print(topk_score)  # scores of top 10 items
     # print(topk_iid_list)  # internal id of top 10 items
     external_item_list = dataset.id2token(dataset.iid_field, topk_iid_list.cpu())

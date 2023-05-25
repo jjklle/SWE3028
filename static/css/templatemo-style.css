@@ -179,7 +179,7 @@ a:focus {
 /* Hero */
 
 #hero {
-  background-image: url(../img/the-town-bg-01.jpg);
+  background-image: url(../img/black_background.jpg);
   background-repeat: no-repeat;
   height: 100vh;
   min-height: 375px;
@@ -489,7 +489,7 @@ figure.effect-honey:hover h2 i {
 
 #contact {
   color: white;
-  /*background-image: url(../img/the-town-bg-02.jpg);*/
+  background-image: url(../img/black_background.jpg);
   background-color: grey;
   background-position: center;
   background-repeat: no-repeat;

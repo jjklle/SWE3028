@@ -10,6 +10,7 @@ from routers import user
 from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
 import os
+import json
 
 app = FastAPI()
 app.include_router(user.router)
@@ -19,13 +20,41 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 
 #recbole 실행
 os.chdir("./RecBole")
-user_id = 1
-os.system(f"python ./predict.py --u_id={user_id}")
+user_id = 2865
+os.system(f"python ./predict.py --user_id={user_id}")
+
+with open('contents_idx.json', 'r', encoding='UTF-8') as f:
+    contents_idx = json.load(f)
+# print(json.dumps(contents_idx,ensure_ascii = False))
+
 
 f = open("./recommend_ls.txt", "r")
 string = f.readline()
 recommend_ls = list(map(int, string.split()))
-print(recommend_ls)
+contents = []
+movie = []
+tv = []
+book = []
+
+
+for content in recommend_ls:
+    title = contents_idx[str(content)]
+    if len(contents) < 8:
+        contents.append(title[:-1])
+    if len(movie) < 8:
+        if title[-1] == "m":
+            movie.append(title[:-1])
+    if len(tv) < 8:
+        if title[-1] == "t":
+            tv.append(title[:-1])
+    if len(book) < 8:
+        if title[-1] == "b":
+            book.append(title[:-1])
+    
+print(contents)
+print(movie)
+print(tv)
+print(book)
 os.chdir("../")
 
 # @app.get('/login')
@@ -50,5 +79,5 @@ def get_preference_form(request: Request):
 
 @app.get("/")
 async def get_home(request: Request):
-    return templates.TemplateResponse('index.html', context={'request':request})
+    return templates.TemplateResponse('index.html', context={'request':request, 'movie':movie, 'tv':tv, 'book':book})
 
