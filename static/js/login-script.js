@@ -59,34 +59,52 @@ function storeUserInfo(token, _username, _is_login) {
 }
 
 // Function to update the navigation bar after login
-function updateNavbarAfterLogin() {
+function updateNavbarAfterLogin(username) {
     // Remove the login button
-    const loginButton = document.getElementById("login-btn");
+    const loginButton = $("#login-btn");
     if (loginButton) {
         loginButton.remove();
     }
 
     // Remove the register button
-    const registerButton = document.getElementById("register-btn");
+    const registerButton = $("#register-btn");
     if (registerButton) {
         registerButton.remove();
     }
 
-    //const userInfoElement = document.createElement("div");
-    //userInfoElement.textContent = `Welcome, ${username}`;
-    //userInfoElement.classList.add("nav-link","tm-nav-link");
-    
     // Create a new image element
-    const userImageElement = document.createElement("img");
-    userImageElement.src = "/static/img/icons8-user-64.png";
-    userImageElement.alt = "User Image";
-    userImageElement.id = 'user-image';
+    const userImageElement = $("<img>",{
+        src: "/static/img/icons8-user-64.png",
+        alt: "User Image",
+        id: "user-image",
+        href: "#",
+        'data-toggle': "dropdown",
+        class: "dropdown-toggle",
+        'aria-haspopup': "true",
+        'aria-expanded': "false"
+    });
 
-    // Append the image element to the navbar
-    const navbar = document.getElementById("navbarSupportedContent");
-    if (navbar) {
-        navbar.appendChild(userImageElement);
-    }
+    const dropdownMenu = $("<div>",{
+        class: "dropdown-menu dropdown-menu-right"
+    }).append(
+        $("<a>",{
+            class: "dropdown-item",
+            text: username
+        }),
+        $("<div>",{
+            class: "dropdown-divider"
+        }),
+        $("<a>",{
+            class: "dropdown-item",
+            href: "#",
+            id: "logout",
+            text: "Logout"
+        }));
+
+    const div = $("<div>",{
+        class:"dropdown"
+    }).append(userImageElement,dropdownMenu);
+    div.appendTo("#navbarSupportedContent ul");
 }
 
 
@@ -117,7 +135,7 @@ async function loginSubmit(event) {
       
         // remove register & login button
         // and show user information
-        updateNavbarAfterLogin();
+        updateNavbarAfterLogin(username);
         
         // send request to server->get recommendation lists
         const response2 = fetch('/recommend',{ method: 'POST',body: JSON.stringify(username) });
@@ -130,15 +148,6 @@ async function loginSubmit(event) {
 }
 
 /*===Authetication===*/
-// function parseJwt(token) {
-//     var base64Url = token.split('.')[1];
-//     var base64 = base64Url.replace(/-/g,'+').replace(/_/g,'/');
-//     var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
-//         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-//     }).join(''));
-
-//     return JSON.parse(jsonPayload);
-// }
 function parseJwt(jwt) {
     var token = jwt.split(".")[1];
     return JSON.parse(atob(token));
@@ -163,7 +172,7 @@ function authenticate() {
                 // Token is expired
             } else {
                 // Token is valid
-                updateNavbarAfterLogin();
+                updateNavbarAfterLogin(user_info["username"]);
             }
         } catch (error) {
             // Failed to decode or verify the token
@@ -172,9 +181,14 @@ function authenticate() {
         // Token is not found, perform necessary actions for a non-logged-in user
     }
 }
-window.addEventListener("load",() => {
-    authenticate();
-});
+
+
+/*===Logout===*/
+function logout() {
+    // clear localstorage and refresh
+    localStorage.removeItem('user_info');
+    location.reload();
+}
 
 
 /*===Register===*/
@@ -250,5 +264,11 @@ document.querySelector('#login-form').addEventListener('submit',loginSubmit);
 document.querySelector('#register-form').addEventListener('submit',registerSubmit);
 
 
+window.addEventListener("load",() => {
+    authenticate();
+    if ($("#logout")) {
+        $("#logout").on("click",logout);
+    }
+});
 
 
