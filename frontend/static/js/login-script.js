@@ -69,7 +69,25 @@ async function loginSubmit(event) {
         const data = await response.json();
         alert('Login successful! Token: ' + data.token);
         loginModal.style.display = "none"; // 로그인 성공하면 로그인 모달 닫히게
-    
+        
+        // local storage
+        // access_token, username, is_login
+        const user_info = {
+            access_token: data.token,
+            username: username,
+            is_login: "True"
+        }
+        window.localStorage.setItem('user_info', JSON.stringify(user_info));        
+
+        // remove register & login button
+        // and show user information
+        
+        // send request to server->get recommendation lists
+        const response2 = fetch('/recommend',{ method: 'POST',body: JSON.stringify(username) });
+        const recommend_ls = await response2;
+        console.log(recommend_ls);
+
+
         return data
     }
 }

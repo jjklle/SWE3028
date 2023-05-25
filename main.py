@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends, Path, HTTPException,Form, Request
+from fastapi import FastAPI, Depends, Path, HTTPException,Form, Request, Response
 from pydantic import BaseModel
 from database import engineconn
 from db_class import User
@@ -7,6 +7,9 @@ from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles 
 from starlette import status
 from routers import user
+from fastapi.responses import JSONResponse
+from fastapi.encoders import jsonable_encoder
+
 app = FastAPI()
 app.include_router(user.router)
 
@@ -20,6 +23,14 @@ app.mount("/frontend/static", StaticFiles(directory="frontend/static"), name="st
 # @app.get('/register')
 # def get_register_form(request: Request):
 #     return templates.TemplateResponse('register.html', context={'request':request})
+
+@app.post('/recommend')
+async def get_recommendation(request: Request):
+    username = await request.json()
+    data = [1,2,3,4] # test
+
+    return data
+
 
 @app.get('/register/preference')
 def get_preference_form(request: Request):
