@@ -1,29 +1,29 @@
-from fastapi import FastAPI, Depends, Path, HTTPException,Form, Request, Response
-from pydantic import BaseModel
-from database import engineconn
-from db_class import User
+from fastapi import FastAPI, Path, HTTPException,Form, Request, Response
 from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles 
 from starlette import status
-from routers import user
+from routers import user, content
 from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
 import os
 import json
 
+
 app = FastAPI()
 app.include_router(user.router)
+app.include_router(content.router)
 
 templates = Jinja2Templates(directory='templates')
 app.mount("/static", StaticFiles(directory="static"), name="static")
+
 
 #recbole 실행
 os.chdir("./RecBole")
 user_id = 2865
 os.system(f"python ./predict.py --user_id={user_id}")
 
-with open('contents_idx.json', 'r', encoding='UTF-8') as f:
+with open('../contents_idx.json', 'r', encoding='UTF-8') as f:
     contents_idx = json.load(f)
 # print(json.dumps(contents_idx,ensure_ascii = False))
 
@@ -43,18 +43,18 @@ for content in recommend_ls:
         contents.append(title[:-1])
     if len(movie) < 8:
         if title[-1] == "m":
-            movie.append(title[:-1])
+            movie.append((content,title[:-1]))
     if len(tv) < 8:
         if title[-1] == "t":
             tv.append(title[:-1])
     if len(book) < 8:
         if title[-1] == "b":
             book.append(title[:-1])
-    
-print(contents)
-print(movie)
-print(tv)
-print(book)
+
+#print(contents)
+#print(movie)
+#print(tv)
+#print(book)
 os.chdir("../")
 
 # @app.get('/login')

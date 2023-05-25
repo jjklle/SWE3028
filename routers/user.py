@@ -13,8 +13,10 @@ from jose import jwt,JWTError
 from jose.exceptions import ExpiredSignatureError
 
 router = APIRouter()
+"""
 engine = engineconn()
 session = engine.sessionmaker()
+"""
 oauth2_bearer = OAuth2PasswordBearer(tokenUrl="/token")
 
 ALGORITHM = 'HS256'
@@ -114,7 +116,7 @@ def login(form_data : OAuth2PasswordRequestForm = Depends(), db: Session = Depen
         token = create_access_token(form_data.username, expire)
         return {"token": token}
     
-
+"""
 @router.post('/register/check',status_code=200)
 def check(input: check_id):
     result = session.query(User).filter_by(user_id=input.id).first()
@@ -122,11 +124,11 @@ def check(input: check_id):
         return {"exists":"1"}
     else:
         return 1
-
+"""
 @router.post('/register', status_code=status.HTTP_201_CREATED)
 async def create_user(username: str = Form(...), password: str = Form(...), email: str = Form(...), db: Session = Depends(get_db)):
     
-    result = session.query(User).filter_by(user_id=username).first()
+    result = db.query(User).filter_by(user_id=username).first()
     if result != None: #이미 있는 계정
         raise HTTPException(
         status_code=409,
