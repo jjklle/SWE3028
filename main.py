@@ -13,8 +13,8 @@ from fastapi.encoders import jsonable_encoder
 app = FastAPI()
 app.include_router(user.router)
 
-templates = Jinja2Templates(directory='frontend/templates')
-app.mount("/frontend/static", StaticFiles(directory="frontend/static"), name="static") 
+templates = Jinja2Templates(directory='templates')
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # @app.get('/login')
 # def get_login_form(request: Request):
