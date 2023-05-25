@@ -1,7 +1,6 @@
-import qs from "qs"
-base_url = "http://127.0.0.1:8000"
+const base_url = "";
 
-const fastapi = (operation,url,params,success_callback,failure_callback) => {
+export const fastapi = (operation,url,params,success_callback,failure_callback) => {
     let method = operation
     let content_type = 'application/json'
     let body = JSON.stringify(params)
@@ -9,7 +8,7 @@ const fastapi = (operation,url,params,success_callback,failure_callback) => {
     if (operation === 'login') {
         method = 'post'
         content_type = 'application/x-www-form-urlencoded'
-        body = qs.stringify(params)
+        body = params;
     }
 
     let _url = base_url + url
@@ -56,4 +55,3 @@ const fastapi = (operation,url,params,success_callback,failure_callback) => {
         })
 }
 
-export default fastapi
