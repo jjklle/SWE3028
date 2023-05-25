@@ -92,6 +92,7 @@ async function loginSubmit(event) {
     }
 }
 
+
 async function registerSubmit(event) {
     event.preventDefault();
 
@@ -137,19 +138,37 @@ async function registerSubmit(event) {
     }
     else {
         const data = await response.json();
-        alert(data.message);
         registerModal.style.display = "none"; // 등록 성공하면 모달 닫히게
-        // open preference page
+        
+        // localstorage
+        const user_info = {
+            access_token: data.token,
+            username: username,
+            is_login: "True"
+        }
+        window.localStorage.setItem('user_info',JSON.stringify(user_info));        
 
-        return data
+        // open preference page
+        try {
+            const response = await fetch('/register/preference',{
+                method: 'GET',
+                credentials: 'include', // Include cookies in the request
+            });
+
+            if (response.ok) {
+                // Redirect to the preference page
+                window.location.href = '/register/preference';
+            } else {
+                window.location.href = '/error'
+            }
+        } catch (error) {
+        }
     }
 }
-// 폼 제출 이벤트 핸들러 등록
-//document.getElementById('submit').addEventListener('submit', onSubmit);
 
 document.querySelector('#login-form').addEventListener('submit',loginSubmit);
 document.querySelector('#register-form').addEventListener('submit',registerSubmit);
-//submit eventhandler는 form에만 붙일수 있음
+
 
 
 

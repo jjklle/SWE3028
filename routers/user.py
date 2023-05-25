@@ -138,5 +138,8 @@ async def create_user(username: str = Form(...), password: str = Form(...), emai
         new_user = User(username , hash_password , email)
         db.add(new_user)
         db.commit()
-        return {"message": "User created successfully"}
+        # return access token
+        expire = timedelta(minutes=TOKEN_EXPIRE_MIN)
+        token = create_access_token(username, expire)
+        return {"token": token}
     
