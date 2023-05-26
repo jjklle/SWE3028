@@ -43,7 +43,7 @@ for content in recommend_ls:
         contents.append(title[:-1])
     if len(movie) < 8:
         if title[-1] == "m":
-            movie.append((content,title[:-1]))
+            movie.append((str(content),title[:-1]))
     if len(tv) < 8:
         if title[-1] == "t":
             tv.append(title[:-1])
