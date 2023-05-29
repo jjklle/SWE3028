@@ -18,8 +18,7 @@ def get_db():
         db.close()
 
 
-@router.get("/{index}")
-async def show_content(index: int, db: Session = Depends(get_db)):
+async def show_content(index: int, db:Session = Depends(get_db)):
     name = contents_idx[str(index)][:-1]
     cat = contents_idx[str(index)][-1]
     if cat == 'm':
@@ -28,4 +27,4 @@ async def show_content(index: int, db: Session = Depends(get_db)):
         content = db.query(TV).filter(TV.name == name).first()
     elif cat == 'b':
         content = db.query(BOOK).filter(BOOK.name == name).first()
-    return content
+    return cat, content

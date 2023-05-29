@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Path, HTTPException,Form, Request, Response
+from fastapi import FastAPI, Path, HTTPException,Form, Request, Response, Depends
 from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles 
@@ -8,7 +8,18 @@ from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
 import os
 import json
+from sqlalchemy.orm import Session
+from database import engineconn
+from sqlalchemy.orm import Session
+from utils import *
 
+def get_db():
+    try:
+        engine = engineconn()
+        db = engine.sessionmaker()
+        yield db
+    finally:
+        db.close()
 
 app = FastAPI()
 app.include_router(user.router)
@@ -37,8 +48,8 @@ tv = []
 book = []
 
 
-for content in recommend_ls:
-    title = contents_idx[str(content)]
+for c in recommend_ls:
+    title = contents_idx[str(c)]
     if len(contents) < 8:
         contents.append(title[:-1])
     if len(movie) < 8:
@@ -80,4 +91,31 @@ def get_preference_form(request: Request):
 @app.get("/")
 async def get_home(request: Request):
     return templates.TemplateResponse('index.html', context={'request':request, 'movie':movie, 'tv':tv, 'book':book})
+
+@app.get('/content/{index}')
+async def get_content_page(request: Request, index: int, db: Session = Depends(get_db)):
+    
+    # get content from db
+    category, content_info = await content.show_content(index, db)
+
+    if content_info is None:
+        return templates.TemplateResponse('error.html', context={'request':request})
+    
+    if category=='m' or category=='t':
+        # process strings
+        content_info.genre = process_string_list(content_info.genre)
+        content_info.casting = process_string_list(content_info.casting)
+        content_info.platform = process_string_list(content_info.platform)
+
+        return templates.TemplateResponse('content_movie.html', context={'request':request, 'content':content_info, 'category':category})
+    
+    elif category=='b':
+        content_info.writer = process_string_list(content_info.writer)
+
+        return templates.TemplateResponse('content_book.html', context={'request':request, 'content':content_info, 'category':category})
+
+    else:
+        return templates.TemplateResponse('error.html', context={'request':request})
+
+
 
