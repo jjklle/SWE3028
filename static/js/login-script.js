@@ -49,13 +49,21 @@ window.onclick = function (event) {
 
 /*===Login===*/
 // Store user information into local storage
-function storeUserInfo(token, _username, _is_login) {
+function storeUserInfo(_token, _username, _is_login) {
     const user_info = {
-        access_token: token,
+        access_token: _token,
         username: _username,
         is_login: _is_login // "True" or "False"
     }
     window.localStorage.setItem('user_info',JSON.stringify(user_info));
+}
+
+// Store user information into Cookies
+function storeUserInfo_cookie(_data,_username,_is_login) {
+    Cookies.set('access_token',_data.token);
+    Cookies.set('id',_data.id);
+    Cookies.set('username',_username);
+    Cookies.set('is_login',_is_login);
 }
 
 // Function to update the navigation bar after login
@@ -127,21 +135,17 @@ async function loginSubmit(event) {
         throw new Error('Login failed. Please try again.');
     }
     else {
-        const data = await response.json();
+        const data = await response.json(); // has index id and token
         alert('Login successful! Token: ' + data.token);
         loginModal.style.display = "none"; // 로그인 성공하면 로그인 모달 닫히게
         
-        storeUserInfo(data.token,username,"True");       
+        storeUserInfo_cookie(data,username,"True");       
       
         // remove register & login button
         // and show user information
         updateNavbarAfterLogin(username);
         
-        // send request to server->get recommendation lists
-        const response2 = fetch('/recommend',{ method: 'POST',body: JSON.stringify(username) });
-        const recommend_ls = await response2;
-        console.log(recommend_ls);
-
+        location.reload();
 
         return data
     }
@@ -183,10 +187,37 @@ function authenticate() {
 }
 
 
+function authenticate_cookies() {
+    const is_login = Cookies.get('is_login');
+    if (is_login) { // if exists
+        try {
+            token = Cookies.get('access_token');
+            // Verify and decode the JWT token
+            const decodedToken = parseJwt(token);
+            // Check if the token is expired
+            const currentTime = Date.now() / 1000; // Convert to seconds
+            if (decodedToken.exp < currentTime) {
+                // Token is expired
+            } else {
+                // Token is valid
+                updateNavbarAfterLogin(Cookies.get('username'));
+            }
+        } catch (error) {
+            // Failed to decode or verify the token
+        }
+    } else {
+        // Token is not found, perform necessary actions for a non-logged-in user
+    }
+}
+
 /*===Logout===*/
 function logout() {
     // clear localstorage and refresh
-    localStorage.removeItem('user_info');
+    Cookies.remove('access_token');
+    Cookies.remove('id');
+    Cookies.remove('username');
+    Cookies.remove('is_login');
+    // localStorage.removeItem('user_info');
     location.reload();
 }
 
@@ -239,8 +270,7 @@ async function registerSubmit(event) {
         const data = await response.json();
         registerModal.style.display = "none"; // 등록 성공하면 모달 닫히게
         
-        // localstorage
-        storeUserInfo(data.token,username,"True");       
+        storeUserInfo_cookie(data,username,"True");       
 
         // open preference page
         try {
@@ -264,11 +294,17 @@ document.querySelector('#login-form').addEventListener('submit',loginSubmit);
 document.querySelector('#register-form').addEventListener('submit',registerSubmit);
 
 
-window.addEventListener("load",() => {
-    authenticate();
+// window.addEventListener("load",() => {
+//     authenticate_cookies();
+//     if ($("#logout")) {
+//         $("#logout").on("click",logout);
+//     }
+// });
+
+// document.ready
+$(function () {
+    authenticate_cookies();
     if ($("#logout")) {
         $("#logout").on("click",logout);
     }
 });
-
-

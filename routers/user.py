@@ -114,7 +114,7 @@ def login(form_data : OAuth2PasswordRequestForm = Depends(), db: Session = Depen
     else:
         expire = timedelta(minutes=TOKEN_EXPIRE_MIN)
         token = create_access_token(form_data.username, expire)
-        return {"token": token}
+        return {"id":user.id, "token": token} # return user index in the db and token
     
 """
 @router.post('/register/check',status_code=200)

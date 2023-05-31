@@ -29,59 +29,53 @@ templates = Jinja2Templates(directory='templates')
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 
-#recbole 실행
-os.chdir("./RecBole")
-user_id = 2865
-os.system(f"python ./predict.py --user_id={user_id}")
+def execute_recbole(user_id=2865):
+    # 로그인 없이 처음 실행 시 default user id 2865로 실행
+    # return type: dictionary 
 
-with open('../contents_idx.json', 'r', encoding='UTF-8') as f:
-    contents_idx = json.load(f)
-# print(json.dumps(contents_idx,ensure_ascii = False))
+    #recbole 실행
+    os.chdir("./RecBole")
+    os.system(f"python ./predict.py --user_id={user_id}")
+
+    with open('../contents_idx.json', 'r', encoding='UTF-8') as _f:
+        contents_idx = json.load(_f)
+    # print(json.dumps(contents_idx,ensure_ascii = False))
+
+    f = open("./recommend_ls.txt", "r")
+    string = f.readline()
+    recommend_ls = list(map(int, string.split()))
+    contents = []
+    movie = []
+    drama = []
+    book = []
+
+    for c in recommend_ls:
+        title = contents_idx[str(c)]
+        if len(contents) < 8:
+            contents.append(title[:-1])
+        if len(movie) < 8:
+            if title[-1] == "m":
+                movie.append((str(c),title[:-1]))
+        if len(drama) < 8:
+            if title[-1] == "t":
+                drama.append((str(c),title[:-1]))
+        if len(book) < 8:
+            if title[-1] == "b":
+                book.append((str(c),title[:-1]))
+
+    os.chdir("../")
+
+    return {'movie':movie,
+            'drama':drama,
+            'book':book}
 
 
-f = open("./recommend_ls.txt", "r")
-string = f.readline()
-recommend_ls = list(map(int, string.split()))
-contents = []
-movie = []
-tv = []
-book = []
+# @app.post('/recommend')
+# async def get_recommendation(request: Request):
+#     username = await request.json()
+#     data = [1,2,3,4] # test
 
-
-for c in recommend_ls:
-    title = contents_idx[str(c)]
-    if len(contents) < 8:
-        contents.append(title[:-1])
-    if len(movie) < 8:
-        if title[-1] == "m":
-            movie.append((str(content),title[:-1]))
-    if len(tv) < 8:
-        if title[-1] == "t":
-            tv.append(title[:-1])
-    if len(book) < 8:
-        if title[-1] == "b":
-            book.append(title[:-1])
-
-#print(contents)
-#print(movie)
-#print(tv)
-#print(book)
-os.chdir("../")
-
-# @app.get('/login')
-# def get_login_form(request: Request):
-#     return templates.TemplateResponse('login.html', context={'request':request})
-
-# @app.get('/register')
-# def get_register_form(request: Request):
-#     return templates.TemplateResponse('register.html', context={'request':request})
-
-@app.post('/recommend')
-async def get_recommendation(request: Request):
-    username = await request.json()
-    data = [1,2,3,4] # test
-
-    return data
+#     return data
 
 
 @app.get('/register/preference')
@@ -90,7 +84,29 @@ def get_preference_form(request: Request):
 
 @app.get("/")
 async def get_home(request: Request):
-    return templates.TemplateResponse('index.html', context={'request':request, 'movie':movie, 'tv':tv, 'book':book})
+    return templates.TemplateResponse('index.html', context={'request':request})
+
+@app.post("/recommend")
+async def get_recommendation(request: Request):
+    """
+    Get user id from cookies, if logged in
+
+    Cookies
+    - access_token
+    - id: index of user in db
+    - username: user id
+    - is_login
+    """
+    # is_login = request.cookies.get('is_login')
+    # if(is_login=="True"):
+    #     _id = request.cookies.get('id')
+    #     data = execute_recbole(_id)
+    # else:
+    #     data = execute_recbole()
+    data = execute_recbole()
+    # print(data)
+    return json.dumps(data)
+
 
 @app.get('/content/{index}')
 async def get_content_page(request: Request, index: int, db: Session = Depends(get_db)):
