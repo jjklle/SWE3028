@@ -59,7 +59,7 @@ function make_element(item) {
   });
 
   var img = $('<img>',{
-    src: '{{ url_for("static", path="img/gallery-tn-02.jpg") }}',
+    src: '{{ url_for("static", path="img/gallery-img-01.jpg") }}',
     alt: 'Image',
     class: 'img-fluid'
   });
