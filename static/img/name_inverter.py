@@ -1,8 +1,8 @@
 import os
 import json
-# path = "./movie_image/"
-path = "./tv_image/"
-# path="./book_image/"
+# path = "./movie_image2/"
+# path = "./tv_image/"
+path="./book_image/"
 # print(os.listdir())
 file_lst = os.listdir(path)
 
@@ -15,14 +15,29 @@ name_idx = {v[:-1]:k for k,v in name_idx.items()}
 
 def changeName(path, cName):
     i = 1
-    for filename in os.listdir(path):
+    for file in os.listdir(path):
+        colons = file.replace('--',':')
+        slash = colons.replace('$', '/')
+        star = slash.replace('@','?')
+        bar = star.replace('%','|')
+        file_name = bar.replace('##','*')
+        try:
+            os.rename(path+file, path+file_name)
+        except:
+            file
+            print("special err")
         
         try:
-            print(path+filename, '=>', path+str(cName[filename[:-4]])+str(i)+'.jpg')
-            os.rename(path+filename, path+str(cName[filename[:-4]])+str(i)+'.jpg')
+            print(path+file_name, '=>', path+str(cName[file_name[:-4]])+str(i)+'.jpg')
+            os.rename(path+file_name, path+str(cName[file_name[:-4]])+str(i)+'.jpg')
         
         except:
-            os.remove(path+filename)
+            # os.remove(path+filename)
+            try:
+                os.rename(path+file, path+str(cName[file_name[:-4]])+str(i)+'.jpg')
+            except:
+                print("", end="")
+            
         
         
         i += 1
