@@ -3,7 +3,7 @@ from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles 
 from starlette import status
-from routers import user, content
+from routers import user, content, search
 from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
 import os
@@ -134,4 +134,8 @@ async def get_content_page(request: Request, index: int, db: Session = Depends(g
         return templates.TemplateResponse('error.html', context={'request':request})
 
 
+@app.get('/search/')
+async def search_content(request: Request, q: str, db: Session = Depends(get_db)):
+    result = await search.search_content(q,db)
+    return result
 
