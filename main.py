@@ -29,7 +29,7 @@ templates = Jinja2Templates(directory='templates')
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 
-def execute_recbole(user_id=2865):
+def execute_recbole(user_id=2864):
     # 로그인 없이 처음 실행 시 default user id 2865로 실행
     # return type: dictionary 
 
