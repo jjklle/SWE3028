@@ -28,3 +28,12 @@ async def show_content(index: int, db:Session = Depends(get_db)):
     elif cat == 'b':
         content = db.query(BOOK).filter(BOOK.name == name).first()
     return cat, content
+
+async def similar_content(index: int, db:Session = Depends(get_db)):
+    
+    with open('./routers/indices.txt','rb') as f:
+        indices = f.readlines()
+    output = indices[index-1].decode('UTF-8').split()[1:]
+    output = [int(elem)+1 for elem in output]
+    print(output)
+    return output

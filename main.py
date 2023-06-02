@@ -3,7 +3,7 @@ from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles 
 from starlette import status
-from routers import user, content, search
+from routers import user, content, search#google
 from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
 import os
@@ -12,6 +12,8 @@ from sqlalchemy.orm import Session
 from database import engineconn
 from sqlalchemy.orm import Session
 from utils import *
+
+
 
 def get_db():
     try:
@@ -24,10 +26,11 @@ def get_db():
 app = FastAPI()
 app.include_router(user.router)
 app.include_router(content.router)
+#app.include_router(google_oauth_router, prefix="/auth/google", tags=["auth"])
+
 
 templates = Jinja2Templates(directory='templates')
 app.mount("/static", StaticFiles(directory="static"), name="static")
-
 
 def execute_recbole(user_id=2864):
     # 로그인 없이 처음 실행 시 default user id 2865로 실행
@@ -111,9 +114,10 @@ async def get_recommendation(request: Request):
 @app.get('/content/{index}')
 async def get_content_page(request: Request, index: int, db: Session = Depends(get_db)):
     
+    
     # get content from db
     category, content_info = await content.show_content(index, db)
-
+    similar = await content.similar_content(index,db) #유사한 컨텐츠 인덱스입니다
     if content_info is None:
         return templates.TemplateResponse('error.html', context={'request':request})
     
@@ -132,7 +136,7 @@ async def get_content_page(request: Request, index: int, db: Session = Depends(g
 
     else:
         return templates.TemplateResponse('error.html', context={'request':request})
-
+    
 
 @app.get('/search/')
 async def search_content(request: Request, q: str, db: Session = Depends(get_db)):
