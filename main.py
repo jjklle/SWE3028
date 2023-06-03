@@ -40,6 +40,8 @@ def execute_recbole(user_id=2864):
     os.chdir("./RecBole")
     os.system(f"python ./predict.py --user_id={user_id}")
 
+
+def get_from_recommendls():
     with open('../contents_idx.json', 'r', encoding='UTF-8') as _f:
         contents_idx = json.load(_f)
     # print(json.dumps(contents_idx,ensure_ascii = False))
@@ -89,6 +91,8 @@ def get_preference_form(request: Request):
 async def get_home(request: Request):
     return templates.TemplateResponse('index.html', context={'request':request})
 
+
+
 @app.post("/recommend")
 async def get_recommendation(request: Request):
     """
@@ -100,13 +104,16 @@ async def get_recommendation(request: Request):
     - username: user id
     - is_login
     """
+    # need to fix
+
     # is_login = request.cookies.get('is_login')
     # if(is_login=="True"):
     #     _id = request.cookies.get('id')
     #     data = execute_recbole(_id)
     # else:
     #     data = execute_recbole()
-    data = execute_recbole()
+    execute_recbole()
+    data = get_from_recommendls()
     # print(data)
     return json.dumps(data)
 

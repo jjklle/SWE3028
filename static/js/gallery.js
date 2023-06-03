@@ -47,8 +47,17 @@
     movie-gallery
  */
 
-function make_element(item) {
+function make_element(item, category) {
   // item: content info in list e.g. ['3440', '알라딘']
+  path = '/static/img/'; //image path
+  idx = parseInt(item[0]) + 1;
+  if (category == 'm') {
+    path = path + "movie_image/" + idx;
+  }else if (category == 't') {
+    path = path + "tv_image/" + idx;
+  } else if (category == 'b') {
+    path = path + "book_image/" + idx;
+  }
   var link = $('<a>',{
     href: '/content/' + item[0],
     class: 'content-link'
@@ -59,7 +68,7 @@ function make_element(item) {
   });
 
   var img = $('<img>',{
-    src: '{{ url_for("static", path="img/gallery-img-01.jpg") }}',
+    src:  path,
     alt: 'Image',
     class: 'img-fluid'
   });
@@ -82,13 +91,13 @@ function make_content_display(content_data) {
   $('#book-gallery').find('a').remove();
 
   for (i = 0; i < 8; i++) {
-    item = make_element(content_data.movie[i]);
+    item = make_element(content_data.movie[i], 'm');
     item.appendTo("#movie-gallery");
 
-    item = make_element(content_data.drama[i]);
+    item = make_element(content_data.drama[i], 't');
     item.appendTo("#drama-gallery");
 
-    item = make_element(content_data.book[i]);
+    item = make_element(content_data.book[i], 'b');
     item.appendTo("#book-gallery");
   }
 }
