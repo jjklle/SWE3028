@@ -144,6 +144,7 @@ class Trainer(AbstractTrainer):
         self.evaluator = Evaluator(config)
         self.item_tensor = None
         self.tot_item_num = None
+        self.saved_model_file = "./saved/BPR.pth"
 
     def _build_optimizer(self, **kwargs):
         r"""Init the Optimizer

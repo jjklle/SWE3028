@@ -4,4 +4,6 @@
 
 .vscode/
 *.pyc
+LightsailDefaultKey-ap-northeast-2.pem
+log_tensorboard/
 

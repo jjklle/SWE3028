@@ -11,6 +11,8 @@ from passlib.context import CryptContext
 from datetime import datetime, timedelta
 from jose import jwt,JWTError
 from jose.exceptions import ExpiredSignatureError
+import os
+import threading
 
 router = APIRouter()
 """
@@ -125,9 +127,10 @@ def check(input: check_id):
     else:
         return 1
 """
+
+
 @router.post('/register', status_code=status.HTTP_201_CREATED)
 async def create_user(username: str = Form(...), password: str = Form(...), email: str = Form(...), db: Session = Depends(get_db)):
-    
     result = db.query(User).filter_by(user_id=username).first()
     if result != None: #이미 있는 계정
         raise HTTPException(

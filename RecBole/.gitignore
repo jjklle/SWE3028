@@ -3,7 +3,7 @@
 
 
 .vscode/
-
+log_tensorboard/
 *.pyc
 *.log
 

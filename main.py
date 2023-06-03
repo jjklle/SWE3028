@@ -12,6 +12,8 @@ from sqlalchemy.orm import Session
 from database import engineconn
 from sqlalchemy.orm import Session
 from utils import *
+from fastapi import BackgroundTasks
+import asyncio
 
 
 
@@ -71,6 +73,11 @@ def execute_recbole(user_id=2864):
     return {'movie':movie,
             'drama':drama,
             'book':book}
+
+def train_recbole():
+    os.chdir("./RecBole")
+    os.system(f"python ./run_recbole.py --model=BPR --dataset=contents")
+    os.chdir("../")
 
 
 # @app.post('/recommend')
@@ -142,4 +149,16 @@ async def get_content_page(request: Request, index: int, db: Session = Depends(g
 async def search_content(request: Request, q: str, db: Session = Depends(get_db)):
     result = await search.search_content(q,db)
     return result
+
+
+@app.post("/train_recbole/")
+async def train(background_tasks: BackgroundTasks):
+    background_tasks.add_task(train_recbole())
+    return {"message": "success"}
+
+
+
+# @app.post("/test/")
+# async def test():
+#     return {"message": "test"}
 
