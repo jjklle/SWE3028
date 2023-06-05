@@ -97,7 +97,8 @@ function updateNavbarAfterLogin(username) {
     }).append(
         $("<a>",{
             class: "dropdown-item",
-            text: username
+            text: username,
+            href: "mypage"
         }),
         $("<div>",{
             class: "dropdown-divider"

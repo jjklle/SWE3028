@@ -140,7 +140,11 @@ async def search_content(q: str, db: Session = Depends(get_db)):
     result.clear()
     names = q.split()
     #description 함수 추가를 통해, 요약 정보에 검색하는 키워드가 있는지 나타낼 수 있지만, 결과를 도출하는 데 시간이 너무 많이 걸립니다.
-    
+    """
+    return: list of arrays
+        each array contains:
+        id, category, title, director(author), ...
+    """
     search_movie_name(q,db)
     
     if len(names)>1:

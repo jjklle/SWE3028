@@ -51,6 +51,15 @@
                 <a class="nav-link tm-nav-link" href="#book">책</a>
               </li>
             </div>
+
+            <!-- search bar -->
+            <div class="navbar-nav item">
+            <input id="search-input" type="search" placeholder="검색어를 입력하세요" aria-describedby="" class="form-control" style="width:300px;background-color: transparent;margin:5px 3px 0 0;">
+            <div class="input-group-append">
+            <button id="search-btn" type="submit" class="btn btn-light" style="padding:0 15px;height:45px;margin-top:5px;"> <i class="fa fa-search"> </i> </button>
+            </div>
+
+            <!-- 로그인 회원가입 -->
             <div class="navbar-nav item"></div>
             <li class="nav-item">
               <a class="nav-link tm-nav-link" href="#" id="login-btn" style="
@@ -60,7 +69,6 @@
               <button class='button-6 tm-nav-link' id="register-btn" style="
     white-space: nowrap;">회원가입</button>
             </li>
-
             </div>
 
         </div>
@@ -467,7 +475,8 @@
   <script src="{{ url_for('static', path='js/gallery.js') }}"></script>
   <script src="{{ url_for('static', path='js/login-script.js') }}"></script>
   <script src="{{ url_for('static', path='js/script.js') }}"></script>
- 
+  <script src="{{ url_for('static', path='js/search.js') }}"></script>
+
   <script>
     function getOffSet() {
       var _offset = 450;

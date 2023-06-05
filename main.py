@@ -99,6 +99,10 @@ async def get_home(request: Request):
     return templates.TemplateResponse('index.html', context={'request':request})
 
 
+@app.get("/mypage")
+async def get_home(request: Request):
+    return templates.TemplateResponse('mypage.html', context={'request':request})
+
 
 @app.post("/recommend")
 async def get_recommendation(request: Request):
@@ -154,8 +158,9 @@ async def get_content_page(request: Request, index: int, db: Session = Depends(g
 
 @app.get('/search/')
 async def search_content(request: Request, q: str, db: Session = Depends(get_db)):
-    result = await search.search_content(q,db)
-    return result
+    search_results = await search.search_content(q,db)
+
+    return templates.TemplateResponse("search.html", {"request": request, "results": json.dumps(search_results), "query":q})
 
 
 @app.post("/train_recbole/")
@@ -163,9 +168,4 @@ async def train(background_tasks: BackgroundTasks):
     background_tasks.add_task(train_recbole())
     return {"message": "success"}
 
-
-
-# @app.post("/test/")
-# async def test():
-#     return {"message": "test"}
 
