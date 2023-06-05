@@ -49,6 +49,7 @@
 
 function make_element(item, category) {
   // item: content info in list e.g. ['3440', '알라딘']
+  
   path = '/static/img/'; //image path
   idx = parseInt(item[0]) + 1;
   if (category == 'm') {
@@ -58,6 +59,7 @@ function make_element(item, category) {
   } else if (category == 'b') {
     path = path + "book_image/" + idx;
   }
+  path = path + '.jpg';
   var link = $('<a>',{
     href: '/content/' + item[0],
     class: 'content-link'

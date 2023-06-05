@@ -13,11 +13,11 @@ class User(Base):
     preference = Column(TEXT, nullable=False)
 
     def __init__(self, user_id, password, email):
-        self.id = id
+        # self.id = id
         self.user_id = user_id
         self.password = password
         self.email = email
-        self.preference = preference
+        self.preference = 1
 
 
 class MOVIE(Base):
