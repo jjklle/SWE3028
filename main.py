@@ -34,6 +34,16 @@ app.include_router(content.router)
 templates = Jinja2Templates(directory='templates')
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
+def id_plus3000(id):
+    return str(int(id)+3000)
+
+
+def update_dataset(id, item_ls):
+    path = './RecBole/dataset/contents/contents_test.inter'
+    with open(path,'a') as f:
+        for item in item_ls:
+            f.write(str(id)+'\t'+str(item)+'\n')
+
 def execute_recbole(user_id=2864):
     # 로그인 없이 처음 실행 시 default user id 2865로 실행
     # return type: dictionary 
@@ -102,7 +112,15 @@ async def get_register_preference(request: Request, db:Session = Depends(get_db)
     if len(indices)==0:
         indices=None
     username = request.cookies.get('username')
+
+    # id가 불러와지지 않음
+    _id = request.cookies.get('id')
+    print(username)
+    print(_id)
     user.put_preference(username,indices,db)
+    #기존 데이터와 인덱스 충돌을 피하기 위해 3000을 더해서 사용
+    update_dataset(id_plus3000(_id),indices) 
+    train_recbole()
 
 @app.get("/")
 async def get_home(request: Request):
@@ -125,16 +143,19 @@ async def get_recommendation(request: Request):
     - username: user id
     - is_login
     """
-    # need to fix
+    # need to fix: 회원가입시 cookie에서 id가 가져와지지 않는 문제가 있음.
 
-    # is_login = request.cookies.get('is_login')
-    # if(is_login=="True"):
-    #     _id = request.cookies.get('id')
-    #     data = execute_recbole(_id)
-    # else:
-    #     data = execute_recbole()
+
+    is_login = request.cookies.get('is_login')
+    if(is_login=="True"):
+        _id = request.cookies.get('id')
+        print("id: ", _id)
+        # execute_recbole(id_plus3000(_id))
+        execute_recbole(_id)
+    else:
+        execute_recbole()
     
-    # execute_recbole()
+
     data = get_from_recommendls()
     # print(data)
     return json.dumps(data)
@@ -189,9 +210,9 @@ async def search_content(request: Request, q: str, db: Session = Depends(get_db)
     return templates.TemplateResponse("search.html", {"request": request, "results": json.dumps(search_results), "query":q})
 
 
-@app.post("/train_recbole/")
-async def train(background_tasks: BackgroundTasks):
-    background_tasks.add_task(train_recbole())
-    return {"message": "success"}
+# @app.post("/train_recbole/")
+# async def train(background_tasks: BackgroundTasks):
+#     background_tasks.add_task(train_recbole())
+#     return {"message": "success"}
 
 

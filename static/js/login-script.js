@@ -270,7 +270,6 @@ async function registerSubmit(event) {
     else {
         const data = await response.json();
         registerModal.style.display = "none"; // 등록 성공하면 모달 닫히게
-        
         storeUserInfo_cookie(data,username,"True");       
 
         // open preference page
