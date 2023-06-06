@@ -206,10 +206,6 @@
               <figure class="tm-gallery-item">
                 <img src="{{ url_for('static', path='img/gallery-tn-01.jpg') }}" alt="Image" class="img-fluid">
                 <div class="content-title", style="text-align: center;"></div>
-                <!-- movie라는 리스트의 원소는 (index, 컨텐츠명) 이렇게 되어있습니다.-->
-                <!-- 그래서 /movie[0][0]의 주소로 가는 링크를 생성할 경우 그 컨텐츠 페이지로 이동합니다. 제가 한번 넣어봤는데 자꾸 배치가 이상하게 변해서 이부분 수정부탁드립니다.-->
-                <!--나머지 데이터들도 이렇게 튜플을 가진 리스트가 되도록 바꾸겠습니다.-->
-                <!-- <div class="content-description">2023 한국</div> -->
               </figure>
             </a>
             <a href="/content/" class="content-link">
@@ -586,43 +582,43 @@
         gallery: { enabled: true }
       });
       */
-      // Gallery
-      $('.tm-gallery').slick({
-        dots: true,
-        infinite: false,
-        slidesToShow: 5,
-        slidesToScroll: 2,
-        responsive: [
-          {
-            breakpoint: 1199,
-            settings: {
-              slidesToShow: 4,
-              slidesToScroll: 2
-            }
-          },
-          {
-            breakpoint: 991,
-            settings: {
-              slidesToShow: 3,
-              slidesToScroll: 2
-            }
-          },
-          {
-            breakpoint: 767,
-            settings: {
-              slidesToShow: 2,
-              slidesToScroll: 1
-            }
-          },
-          {
-            breakpoint: 480,
-            settings: {
-              slidesToShow: 1,
-              slidesToScroll: 1
-            }
-          }
-        ]
-      });
+      // // Gallery
+      // $('.tm-gallery').slick({
+      //   dots: true,
+      //   infinite: false,
+      //   slidesToShow: 5,
+      //   slidesToScroll: 2,
+      //   responsive: [
+      //     {
+      //       breakpoint: 1199,
+      //       settings: {
+      //         slidesToShow: 4,
+      //         slidesToScroll: 2
+      //       }
+      //     },
+      //     {
+      //       breakpoint: 991,
+      //       settings: {
+      //         slidesToShow: 3,
+      //         slidesToScroll: 2
+      //       }
+      //     },
+      //     {
+      //       breakpoint: 767,
+      //       settings: {
+      //         slidesToShow: 2,
+      //         slidesToScroll: 1
+      //       }
+      //     },
+      //     {
+      //       breakpoint: 480,
+      //       settings: {
+      //         slidesToShow: 1,
+      //         slidesToScroll: 1
+      //       }
+      //     }
+      //   ]
+      // });
 
     });
   </script>

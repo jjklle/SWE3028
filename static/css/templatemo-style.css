@@ -294,10 +294,12 @@ a:focus {
 .tm-gallery-container {
   padding-top: 30px;
   padding-bottom: 120px;
+  margin-left:20px!important;
 }
 
 .tm-gallery-item {
   margin: 0 15px;
+  width:170px;
 }
 
 
@@ -339,6 +341,7 @@ a:focus {
 /* Hover Effect */
 /* Common style */
 .grid figure {
+
   position: relative;
   float: left;
   overflow: hidden;
@@ -674,6 +677,7 @@ p {
 
   .tm-gallery-item {
     margin: 0;
+    width:170px;
   }
 }
 
