@@ -13,12 +13,11 @@ class User(Base):
     preference = Column(TEXT, nullable=False)
 
     def __init__(self, user_id, password, email):
-        self.id = id
+        #self.id = id
         self.user_id = user_id
         self.password = password
         self.email = email
-        self.preference = 1
-
+        #self.preference = 1
 
 class MOVIE(Base):
     __tablename__ = 'movie_info'
@@ -103,9 +102,10 @@ class BOOK(Base):
     age = Column(TEXT)
     description = Column(TEXT)
     
-    def __init__(self, book_index, illustration, writer, rating, subtitle, author, category, year, page, age, description):
+    def __init__(self, book_index,name, illustration, writer, rating, subtitle, author, category, year, page, age, description):
 
         self.book_index = book_index
+        self.name = name
         self.illustration = illustration
         self.writer = writer
         self.rating = rating
@@ -116,5 +116,45 @@ class BOOK(Base):
         self.page = page
         self.age = age
         self.description = description
+
+
+
+
+class WEBTOON(Base):
+    __tablename__ = 'webtoon_info'
+
+    webtoon_index = Column(INT, primary_key=True)
+    name = Column(TEXT)
+    platform = Column(TEXT)
+    illustration = Column(TEXT)
+    illustration_author = Column(TEXT)
+    rating = Column(TEXT)
+    original = Column(TEXT)
+    author = Column(TEXT)
+    genre = Column(TEXT)
+    on = Column(TEXT)
+    day = Column(TEXT)
+    duration = Column(TEXT)
+    age = Column(TEXT)
+    description = Column(TEXT)
     
+    def __init__(self, webtoon_index, name, illustration, illustration_author, rating, original, author, genre, on, day, duration, age, description):
+
+        self.webtoon_index = webtoon_index
+        self.name = name
+        self.illustration = illustration
+        self.illustration_author = illustration_author
+        self.casting = casting
+        self.rating = rating
+        self.original = original
+        self.author = author
+        self.genre = genre
+        self.on = on
+        self.day = day
+        self.duration = duration
+        self.age = age
+        self.description = description
+        
+
+
     

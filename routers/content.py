@@ -1,7 +1,7 @@
 
 from fastapi import Depends, HTTPException, status, APIRouter, Request, Response
 from database import engineconn
-from db_class import MOVIE, TV, BOOK
+from db_class import MOVIE, TV, BOOK, WEBTOON
 from sqlalchemy.orm import Session
 import json
 router = APIRouter()
@@ -24,12 +24,17 @@ async def show_content(index: int, db:Session = Depends(get_db)):
     """
     name = contents_idx[str(index)][:-1]
     cat = contents_idx[str(index)][-1]
-    if cat == 'm':
-        content = db.query(MOVIE).filter(MOVIE.name == name).first()
-    elif cat == 't':
-        content = db.query(TV).filter(TV.name == name).first()
-    elif cat == 'b':
-        content = db.query(BOOK).filter(BOOK.name == name).first()
+    try:
+        if cat == 'm':
+            content = db.query(MOVIE).filter(MOVIE.name == name).first()
+        elif cat == 't':
+            content = db.query(TV).filter(TV.name == name).first()
+        elif cat == 'b':
+            content = db.query(BOOK).filter(BOOK.name == name).first()
+        elif cat == 'w':
+            content = db.query(WEBTOON).filter(WEBTOON.name ==name).first()
+    except:
+        content=None
     return cat, content
 
 async def similar_content(index: int, db:Session = Depends(get_db)):
@@ -42,7 +47,7 @@ async def similar_content(index: int, db:Session = Depends(get_db)):
     output = [int(elem)+1 for elem in output]
     # print(output)
     result = []
-    for idx in output:
+    for idx in output[:5]:
         cat, item = await show_content(idx, db)
         if(item is not None):
             result.append([idx, cat, item.name])

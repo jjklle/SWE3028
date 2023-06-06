@@ -96,6 +96,12 @@ def train_recbole():
 def get_preference_form(request: Request):
     return templates.TemplateResponse('preference.html', context={'request':request})
 
+@app.post('/preference')
+async def get_register_preference(request: Request, db:Session = Depends(get_db)):
+    indices = await request.json()
+    username = request.cookies.get('username')
+    user.put_preference(username,indices,db)
+
 @app.get("/")
 async def get_home(request: Request):
     return templates.TemplateResponse('index.html', context={'request':request})
@@ -131,10 +137,23 @@ async def get_recommendation(request: Request):
     # print(data)
     return json.dumps(data)
 
+@app.post('/like')
+async def update_like(request: Request, db:Session = Depends(get_db)):
+    index = await request.json()
+    username = request.cookies.get('username')
+    user.update_preference(username,index['index'],db)
+    
 
 @app.get('/content/{index}')
 async def get_content_page(request: Request, index: int, db: Session = Depends(get_db)):
-    
+    #유저 선호하는 리스트 가져와서, 현재 컨텐츠 페이지의 인덱스가 있는지 확인
+    username = request.cookies.get('username')
+    preference = user.get_preference(username, db)
+    if str(index) in preference:
+        clicked=1
+    else:
+        clicked=0
+
     
     # get content from db
     category, content_info = await content.show_content(index, db)
@@ -149,7 +168,7 @@ async def get_content_page(request: Request, index: int, db: Session = Depends(g
         content_info.casting = process_string_list(content_info.casting)
         content_info.platform = process_string_list(content_info.platform)
 
-        return templates.TemplateResponse('content_movie.html', context={'request':request, 'content':content_info, 'category':category, 'index':index, 'similar':json.dumps(similar)})
+        return templates.TemplateResponse('content_movie.html', context={'request':request, 'content':content_info, 'category':category, 'index':index, 'similar':json.dumps(similar), 'like':clicked})
     
     elif category=='b':
         content_info.writer = process_string_list(content_info.writer)

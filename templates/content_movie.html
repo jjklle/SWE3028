@@ -53,6 +53,25 @@
             &#9733;{{content.rating}}
 
             <button type="button" class="btn btn-dark" id="like" style="margin-left:20px;">좋아요</button>
+            <script>
+              const button = document.getElementById("like")
+              const defaultColor = button.style.backgroundColor;
+              var likeValue = "{{ like }}";
+              if(likeValue ==1){
+                button.style.backgroundColor='green';
+              }
+              const data = { index: "{{index}}" };
+              button.addEventListener('click',function(){
+                if(button.style.backgroundColor=='green'){
+                  button.style.backgroundColor=defaultColor;
+                  fetch('/like', {method: 'POST', headers: {'Content-Type': 'application/json' }, body: JSON.stringify(data)})
+                }
+                else{
+                  button.style.backgroundColor='green';
+                  fetch('/like', {method: 'POST', headers: {'Content-Type': 'application/json' }, body: JSON.stringify(data)})
+                }
+              });
+            </script>
           </div>
         </div>
       </div>

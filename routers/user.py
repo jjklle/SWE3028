@@ -50,6 +50,29 @@ def get_db():
     finally:
         db.close()
 
+def get_preference(username:str, db):
+    user = db.query(User).filter(User.user_id == username).first()
+    preference= user.preference.split(', ')
+    return preference
+
+def put_preference(username:str, preference: list, db):
+    updated_preference = ", ".join(preference)
+    user = db.query(User).filter(User.user_id == username).update({'preference': updated_preference})
+    db.commit()
+
+def update_preference(username:str, index:str, db):
+    preference = get_preference(username,db)
+    
+    if index in preference:
+        preference.remove(index)
+    else:
+        preference.append(index)
+    updated_preference = ", ".join(preference)
+    db.query(User).filter(User.user_id == username).update({'preference': updated_preference})
+    db.commit()
+
+
+
 
 def authenticate_user(username: str, password: str, db):
     user = db.query(User).filter(User.user_id == username).first()
