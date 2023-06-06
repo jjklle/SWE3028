@@ -19,6 +19,9 @@ def get_db():
 
 
 async def show_content(index: int, db:Session = Depends(get_db)):
+    """
+    return: category(m,t,b), content info (depends on db schema)
+    """
     name = contents_idx[str(index)][:-1]
     cat = contents_idx[str(index)][-1]
     if cat == 'm':

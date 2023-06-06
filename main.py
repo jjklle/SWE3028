@@ -145,12 +145,12 @@ async def get_content_page(request: Request, index: int, db: Session = Depends(g
         content_info.casting = process_string_list(content_info.casting)
         content_info.platform = process_string_list(content_info.platform)
 
-        return templates.TemplateResponse('content_movie.html', context={'request':request, 'content':content_info, 'category':category})
+        return templates.TemplateResponse('content_movie.html', context={'request':request, 'content':content_info, 'category':category, 'index':index})
     
     elif category=='b':
         content_info.writer = process_string_list(content_info.writer)
 
-        return templates.TemplateResponse('content_book.html', context={'request':request, 'content':content_info, 'category':category})
+        return templates.TemplateResponse('content_book.html', context={'request':request, 'content':content_info, 'category':category, 'index':index})
 
     else:
         return templates.TemplateResponse('error.html', context={'request':request})
