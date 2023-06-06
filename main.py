@@ -138,7 +138,8 @@ async def get_content_page(request: Request, index: int, db: Session = Depends(g
     
     # get content from db
     category, content_info = await content.show_content(index, db)
-    similar = await content.similar_content(index,db) #유사한 컨텐츠 인덱스입니다
+    similar = await content.similar_content(index,db)
+    
     if content_info is None:
         return templates.TemplateResponse('error.html', context={'request':request})
     
@@ -148,12 +149,12 @@ async def get_content_page(request: Request, index: int, db: Session = Depends(g
         content_info.casting = process_string_list(content_info.casting)
         content_info.platform = process_string_list(content_info.platform)
 
-        return templates.TemplateResponse('content_movie.html', context={'request':request, 'content':content_info, 'category':category, 'index':index})
+        return templates.TemplateResponse('content_movie.html', context={'request':request, 'content':content_info, 'category':category, 'index':index, 'similar':json.dumps(similar)})
     
     elif category=='b':
         content_info.writer = process_string_list(content_info.writer)
 
-        return templates.TemplateResponse('content_book.html', context={'request':request, 'content':content_info, 'category':category, 'index':index})
+        return templates.TemplateResponse('content_book.html', context={'request':request, 'content':content_info, 'category':category, 'index':index, 'similar':json.dumps(similar)})
 
     else:
         return templates.TemplateResponse('error.html', context={'request':request})

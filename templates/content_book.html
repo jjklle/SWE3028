@@ -6,10 +6,14 @@
     <meta charset="utf-8">
     <meta name="keywords">
     <meta name="description" content="">
+    <meta id="similar-contents" data-content="{{similar}}">
+
     <title>{{content.name}}</title>
     <link rel="stylesheet" href="{{ url_for('static', path='css/content_movie.css') }}" media="screen">
     <link rel="stylesheet" href="{{ url_for('static', path='css/content_movie.css') }}" media="screen">
     <link rel="stylesheet" href="{{ url_for('static', path='css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', path='css/content-gallery.css') }}" />
+
 
 
     <link id="u-theme-google-font" rel="stylesheet"
@@ -40,7 +44,7 @@
         <div class="u-align-left u-border-3 u-border-grey-40 u-container-style u-expanded-width u-group u-group-1">
             <div class="u-container-layout u-container-layout-1">
                 <img class="u-border-4 u-border-white u-image u-image-round u-radius-10 u-image-1"
-                    src="/static/img/gallery-img-01.jpg" alt="" data-image-width="853" data-image-height="1280">
+                    src="/static/img/image/{{index}}.jpg" alt="" data-image-width="853" data-image-height="1280">
                 <!-- title -->
                 <h2 class="u-custom-font u-font-montserrat u-text u-text-1">{{content.name}}</h2>
                 <p class="u-text u-text-grey-40 u-text-3"> {{content.year}} ・ {{content.category}}
@@ -85,8 +89,89 @@
                         class="u-border-2 u-border-grey-40 u-border-no-left u-border-no-right u-border-no-top u-container-align-center u-container-style u-list-item u-repeater-item u-shape-rectangle u-white u-list-item-3">
                         <div class="u-container-layout u-similar-container u-valign-bottom u-container-layout-3">
                             <h4 class="u-text u-text-5">비슷한 작품</h4>
-                            <p class="u-text u-text-6">루카 구아다디노<br>티모시 샬라메, 아미 해머, ...
-                            </p>
+                            <br>
+                            <!-- content gallery -->
+
+                            <h5>영화</h5>
+                            <div id="movie-gallery" class="content-gallery">
+                                <div class="gallery-item">
+                                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}"
+                                            alt=""></a>
+                                </div>
+                                <div class="gallery-item">
+                                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}"
+                                            alt=""></a>
+                                </div>
+                                <div class="gallery-item">
+                                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}"
+                                            alt=""></a>
+                                </div>
+                                <div class="gallery-item">
+                                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}"
+                                            alt=""></a>
+                                </div>
+                                <div class="gallery-item">
+                                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}"
+                                            alt=""></a>
+                                </div>
+                                <div class="gallery-item">
+                                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}"
+                                            alt=""></a>
+                                </div>
+                            </div>
+
+
+                            <h5>드라마</h5>
+
+                            <div id="drama-gallery" class="content-gallery">
+                                <div class="gallery-item">
+                                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}"
+                                            alt=""></a>
+                                </div>
+                                <div class="gallery-item">
+                                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}"
+                                            alt=""></a>
+                                </div>
+                                <div class="gallery-item">
+                                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}"
+                                            alt=""></a>
+                                </div>
+                                <div class="gallery-item">
+                                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}"
+                                            alt=""></a>
+                                </div>
+                                <div class="gallery-item">
+                                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}"
+                                            alt=""></a>
+                                </div>
+                            </div>
+
+
+                            <h5>책</h5>
+
+                            <div id="book-gallery" class="content-gallery">
+                                <div class="gallery-item">
+                                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}"
+                                            alt=""></a>
+                                </div>
+                                <div class="gallery-item">
+                                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}"
+                                            alt=""></a>
+                                </div>
+                                <div class="gallery-item">
+                                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}"
+                                            alt=""></a>
+                                </div>
+                                <div class="gallery-item">
+                                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}"
+                                            alt=""></a>
+                                </div>
+                                <div class="gallery-item">
+                                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}"
+                                            alt=""></a>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -96,6 +181,7 @@
     <script class="u-script" src="{{ url_for('static', path='js/jquery-1.9.1.min.js') }}"></script>
     <script class="u-script" src="{{ url_for('static', path='js/content_movie.js') }}"></script>
     <script src="{{ url_for('static', path='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', path='js/content-gallery.js') }}"></script>
 
     <script>
 

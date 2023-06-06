@@ -1,108 +1,192 @@
 <!DOCTYPE html>
-<html style="font-size: 16px;" lang="en"><head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta charset="utf-8">
-    <meta name="keywords">
-    <meta name="description" content="">
-    <title>{{content.name}}</title>
-    <link rel="stylesheet" href="{{ url_for('static', path='css/content_movie.css') }}" media="screen">
-    <link rel="stylesheet" href="{{ url_for('static', path='css/content_movie.css') }}" media="screen">
+<html style="font-size: 16px;" lang="en">
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <meta name="keywords">
+  <meta name="description" content="">
+  <meta id="similar-contents" data-content="{{similar}}">
+
+  <title>{{content.name}}</title>
+  <link rel="stylesheet" href="{{ url_for('static', path='css/content_movie.css') }}" media="screen">
+  <link rel="stylesheet" href="{{ url_for('static', path='css/content_movie.css') }}" media="screen">
   <link rel="stylesheet" href="{{ url_for('static', path='css/bootstrap.min.css') }}" />
-
-    
-    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
-    <link id="u-page-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i">
-    
-
-    <meta property="og:title" content="Home">
-    <meta property="og:type" content="website">
-  <meta data-intl-tel-input-cdn-path="intlTelInput/"></head>
-  <body class="u-body u-xl-mode" data-lang="en"><header class="u-clearfix u-header u-header" id="sec-b032"><div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+  <link rel="stylesheet" href="{{ url_for('static', path='css/content-gallery.css') }}" />
 
 
+  <link id="u-theme-google-font" rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
+  <link id="u-page-google-font" rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i">
 
-        <nav class="u-menu u-menu-dropdown u-offcanvas u-menu-1">
-          
-        </nav>
+
+  <meta property="og:title" content="Home">
+  <meta property="og:type" content="website">
+  <meta data-intl-tel-input-cdn-path="intlTelInput/">
+</head>
+
+<body class="u-body u-xl-mode" data-lang="en">
+  <header class="u-clearfix u-header u-header" id="sec-b032">
+    <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
 
 
-      </div></header>
-    <section class="u-clearfix u-section-1" id="carousel_2202">
-      <div class="u-align-left u-border-3 u-border-grey-40 u-container-style u-expanded-width u-group u-group-1">
-        <div class="u-container-layout u-container-layout-1">
-          <img class="u-border-4 u-border-white u-image u-image-round u-radius-10 u-image-1" src="/static/img/image/{{index}}.jpg" alt="" data-image-width="853" data-image-height="1280">
-          <!-- title -->
-          <h2 class="u-custom-font u-font-montserrat u-text u-text-1">{{content.name}}</h2>
-          <p class="u-text u-text-grey-40 u-text-3"> {{content.year}} ・ {{content.genre}} ・ {{content.country}}</p>
-          <div class="u-container-style u-group u-white u-group-2">
-            <!-- rating -->
-            <div id="rating" class="u-container-layout u-container-layout-2" style="margin-left:-20px;padding-left:0px">평균 &#9733;{{content.rating}}
-            
+
+      <nav class="u-menu u-menu-dropdown u-offcanvas u-menu-1">
+
+      </nav>
+
+
+    </div>
+  </header>
+  <section class="u-clearfix u-section-1" id="carousel_2202">
+    <div class="u-align-left u-border-3 u-border-grey-40 u-container-style u-expanded-width u-group u-group-1">
+      <div class="u-container-layout u-container-layout-1">
+        <img class="u-border-4 u-border-white u-image u-image-round u-radius-10 u-image-1"
+          src="/static/img/image/{{index}}.jpg" alt="" data-image-width="853" data-image-height="1280">
+        <!-- title -->
+        <h2 class="u-custom-font u-font-montserrat u-text u-text-1">{{content.name}}</h2>
+        <p class="u-text u-text-grey-40 u-text-3"> {{content.year}} ・ {{content.genre}} ・ {{content.country}}</p>
+        <div class="u-container-style u-group u-white u-group-2">
+          <!-- rating -->
+          <div id="rating" class="u-container-layout u-container-layout-2" style="margin-left:-20px;padding-left:0px">평균
+            &#9733;{{content.rating}}
+
             <button type="button" class="btn btn-dark" id="like" style="margin-left:20px;">좋아요</button>
-            </div>
           </div>
         </div>
       </div>
-    </section>
-    <section class="u-clearfix u-section-2" id="carousel_cb1d">
-      <div class="u-clearfix u-sheet u-valign-top u-sheet-1">
-        <div class="u-layout-grid u-list u-list-1">
-          <div class="u-repeater u-repeater-1">
-            <div class="u-align-left u-border-2 u-border-grey-40 u-border-no-left u-border-no-right u-border-no-top u-container-align-center u-container-style u-list-item u-repeater-item u-shape-rectangle u-white u-list-item-1">
-              <div id="info" class="u-container-layout u-similar-container u-valign-bottom u-container-layout-1">
-                <h4 class="u-text u-text-1" >기본 정보</h4>
-                <p class="u-text u-text-2">{{content.name}}<br>{{content.original}}<br>{{content.year}} ・ {{content.genre}} ・ {{content.country}}<br>{{content.running_time}} · {{content.age}}<br>
-                  <br>{{content.description}}
-                </p>
-                <br><br>
-                <div id="platform" style="display:none">
-                  <h4 class="u-text u-text-1">감상 가능한 곳</h4>
-                  <p class="u-text u-text-2">{{content.platform}}
+    </div>
+  </section>
+  <section class="u-clearfix u-section-2" id="carousel_cb1d">
+    <div class="u-clearfix u-sheet u-valign-top u-sheet-1">
+      <div class="u-layout-grid u-list u-list-1">
+        <div class="u-repeater u-repeater-1">
+          <div
+            class="u-align-left u-border-2 u-border-grey-40 u-border-no-left u-border-no-right u-border-no-top u-container-align-center u-container-style u-list-item u-repeater-item u-shape-rectangle u-white u-list-item-1">
+            <div id="info" class="u-container-layout u-similar-container u-valign-bottom u-container-layout-1">
+              <h4 class="u-text u-text-1">기본 정보</h4>
+              <p class="u-text u-text-2">{{content.name}}<br>{{content.original}}<br>{{content.year}} ・
+                {{content.genre}} ・ {{content.country}}<br>{{content.running_time}} · {{content.age}}<br>
+                <br>{{content.description}}
+              </p>
+              <br><br>
+              <div id="platform" style="display:none">
+                <h4 class="u-text u-text-1">감상 가능한 곳</h4>
+                <p class="u-text u-text-2">{{content.platform}}
 
+              </div>
+              </p>
+            </div>
+          </div>
+
+          <div
+            class="u-border-2 u-border-grey-40 u-border-no-left u-border-no-right u-border-no-top u-container-align-center u-container-style u-list-item u-repeater-item u-shape-rectangle u-white u-list-item-2">
+            <div class="u-container-layout u-similar-container u-valign-bottom u-container-layout-2">
+              <h4 class="u-text u-text-3">출연/제작</h4>
+              <p class="u-text u-text-4">{{content.director}}<br>{{content.casting}}
+              </p>
+            </div>
+          </div>
+          <div
+            class="u-border-2 u-border-grey-40 u-border-no-left u-border-no-right u-border-no-top u-container-align-center u-container-style u-list-item u-repeater-item u-shape-rectangle u-white u-list-item-3">
+            <div class="u-container-layout u-similar-container u-valign-bottom u-container-layout-3">
+              <h4 class="u-text u-text-5">비슷한 작품</h4>
+              <br>
+              <!-- content gallery -->
+              <h5>영화</h5>
+              <div id="movie-gallery" class="content-gallery">
+                <div class="gallery-item">
+                  <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}" alt=""></a>
                 </div>
-                </p>
-              </div>  
-            </div>
-
-            <div class="u-border-2 u-border-grey-40 u-border-no-left u-border-no-right u-border-no-top u-container-align-center u-container-style u-list-item u-repeater-item u-shape-rectangle u-white u-list-item-2">
-              <div class="u-container-layout u-similar-container u-valign-bottom u-container-layout-2">
-                <h4 class="u-text u-text-3">출연/제작</h4>
-                <p class="u-text u-text-4">{{content.director}}<br>{{content.casting}}
-                </p>
+                <div class="gallery-item">
+                  <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}" alt=""></a>
+                </div>
+                <div class="gallery-item">
+                  <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}" alt=""></a>
+                </div>
+                <div class="gallery-item">
+                  <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}" alt=""></a>
+                </div>
+                <div class="gallery-item">
+                  <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}" alt=""></a>
+                </div>
+                <div class="gallery-item">
+                  <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}" alt=""></a>
+                </div>
               </div>
-            </div>
-            <div class="u-border-2 u-border-grey-40 u-border-no-left u-border-no-right u-border-no-top u-container-align-center u-container-style u-list-item u-repeater-item u-shape-rectangle u-white u-list-item-3">
-              <div class="u-container-layout u-similar-container u-valign-bottom u-container-layout-3">
-                <h4 class="u-text u-text-5">비슷한 작품</h4>
-                <p class="u-text u-text-6">루카 구아다디노<br>티모시 샬라메, 아미 해머, ...
-                </p>
+
+
+              <h5>드라마</h5>
+
+              <div id="drama-gallery" class="content-gallery">
+                <div class="gallery-item">
+                  <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}" alt=""></a>
+                </div>
+                <div class="gallery-item">
+                  <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}" alt=""></a>
+                </div>
+                <div class="gallery-item">
+                  <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}" alt=""></a>
+                </div>
+                <div class="gallery-item">
+                  <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}" alt=""></a>
+                </div>
+                <div class="gallery-item">
+                  <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}" alt=""></a>
+                </div>
+              </div>
+
+
+              <h5>책</h5>
+
+              <div id="book-gallery" class="content-gallery">
+                <div class="gallery-item">
+                  <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}" alt=""></a>
+                </div>
+                <div class="gallery-item">
+                  <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}" alt=""></a>
+                </div>
+                <div class="gallery-item">
+                  <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}" alt=""></a>
+                </div>
+                <div class="gallery-item">
+                  <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}" alt=""></a>
+                </div>
+                <div class="gallery-item">
+                  <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}" alt=""></a>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
   <script class="u-script" src="{{ url_for('static', path='js/jquery-1.9.1.min.js') }}"></script>
   <script class="u-script" src="{{ url_for('static', path='js/content_movie.js') }}"></script>
   <script src="{{ url_for('static', path='js/bootstrap.min.js') }}"></script>
+  <script src="{{ url_for('static', path='js/content-gallery.js') }}"></script>
 
   <script>
     var platform = "{{ content.platform }}";
-    if (platform!==""){
+    if (platform !== "") {
       $("#platform").css('display','block');
     }
 
     // Add channel info for TV content
     var channel = "{{ content.channel }}";
-    if (channel!==""){
+    if (channel !== "") {
       $("#platform").append(
-        $("<span>", {
-          id:"channel",
-          text:"<br>" + "채널 " + channel
+        $("<span>",{
+          id: "channel",
+          text: "<br>" + "채널 " + channel
         })
       );
     }
 
   </script>
 
-</body></html>
+</body>
+
+</html>

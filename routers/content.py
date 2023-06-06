@@ -33,10 +33,18 @@ async def show_content(index: int, db:Session = Depends(get_db)):
     return cat, content
 
 async def similar_content(index: int, db:Session = Depends(get_db)):
-    
+    """
+    return: list of contents (index, category, content name)
+    """
     with open('./routers/indices.txt','rb') as f:
         indices = f.readlines()
     output = indices[index-1].decode('UTF-8').split()[1:]
     output = [int(elem)+1 for elem in output]
-    print(output)
-    return output
+    # print(output)
+    result = []
+    for idx in output:
+        cat, item = await show_content(idx, db)
+        if(item is not None):
+            result.append([idx, cat, item.name])
+
+    return result
