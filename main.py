@@ -99,6 +99,8 @@ def get_preference_form(request: Request):
 @app.post('/preference')
 async def get_register_preference(request: Request, db:Session = Depends(get_db)):
     indices = await request.json()
+    if len(indices)==0:
+        indices=None
     username = request.cookies.get('username')
     user.put_preference(username,indices,db)
 
@@ -149,7 +151,8 @@ async def get_content_page(request: Request, index: int, db: Session = Depends(g
     #유저 선호하는 리스트 가져와서, 현재 컨텐츠 페이지의 인덱스가 있는지 확인
     username = request.cookies.get('username')
     preference = user.get_preference(username, db)
-    if str(index) in preference:
+
+    if preference != None and str(index) in preference:
         clicked=1
     else:
         clicked=0

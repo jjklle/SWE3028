@@ -50,24 +50,39 @@ def get_db():
     finally:
         db.close()
 
+# 선호도 처리하는 함수들
+
 def get_preference(username:str, db):
     user = db.query(User).filter(User.user_id == username).first()
-    preference= user.preference.split(', ')
+    if user.preference == None:
+        preference=None
+    else:
+        preference= user.preference.split(', ')
+    print(preference)
     return preference
 
 def put_preference(username:str, preference: list, db):
-    updated_preference = ", ".join(preference)
+    if preference==None:
+        updated_preference=None
+    else:
+        updated_preference = ", ".join(preference)
     user = db.query(User).filter(User.user_id == username).update({'preference': updated_preference})
     db.commit()
 
 def update_preference(username:str, index:str, db):
     preference = get_preference(username,db)
-    
-    if index in preference:
-        preference.remove(index)
+    if preference==None:
+        updated_preference=index
+    elif index in preference:
+        if len(preference)==1:
+            updated_preference=None
+        else:
+            preference.remove(index)
+            updated_preference = ", ".join(preference)
     else:
         preference.append(index)
-    updated_preference = ", ".join(preference)
+        updated_preference = ", ".join(preference)
+
     db.query(User).filter(User.user_id == username).update({'preference': updated_preference})
     db.commit()
 
