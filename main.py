@@ -132,6 +132,7 @@ async def get_register_preference(request: Request, db:Session = Depends(get_db)
     #기존 데이터와 인덱스 충돌을 피하기 위해 3000을 더해서 사용
     update_dataset(id_plus3000(_id),indices) 
     train_recbole()
+    execute_recbole(id_plus3000(_id))
 
 
 @app.get("/")
@@ -166,7 +167,7 @@ async def get_recommendation(request: Request):
     if(is_login=="True"):
         _id = request.cookies.get('id')
         print("id: ", _id)
-        execute_recbole(id_plus3000(_id))
+        # execute_recbole(id_plus3000(_id))
         # execute_recbole(_id)
     else:
         execute_recbole()

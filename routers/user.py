@@ -146,7 +146,21 @@ async def get_current_user(token: str = Depends(oauth2_bearer)):
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
         )
-    
+
+
+def execute_recbole(user_id=2865):
+    # 로그인 없이 처음 실행 시 default user id 2865로 실행
+    # return type: dictionary 
+
+    #recbole 실행
+    os.chdir("./RecBole")
+    os.system(f"python ./predict.py --user_id={user_id}")
+    os.chdir("../")
+
+def id_plus3000(id):
+    return str(int(id)+2865-155)
+
+
 @router.post('/login',status_code=200)
 def login(form_data : OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     user = authenticate_user(form_data.username, form_data.password,db)
@@ -159,6 +173,7 @@ def login(form_data : OAuth2PasswordRequestForm = Depends(), db: Session = Depen
     else:
         expire = timedelta(minutes=TOKEN_EXPIRE_MIN)
         token = create_access_token(form_data.username, expire)
+        execute_recbole(id_plus3000(user.id))
         return {"id":user.id, "token": token} # return user index in the db and token
     
 """
