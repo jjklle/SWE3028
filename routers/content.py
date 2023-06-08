@@ -9,6 +9,7 @@ router = APIRouter()
 with open('contents_idx.json', 'r', encoding='UTF-8') as f:
     contents_idx = json.load(f)
 
+
 def get_db():
     try:
         engine = engineconn()
@@ -37,9 +38,14 @@ async def show_content(index: int, db:Session = Depends(get_db)):
         content=None
     return cat, content
 
+
 async def similar_content(index: int, db:Session = Depends(get_db)):
     """
-    return: list of contents (index, category, content name)
+    Args:
+        index: integer index of a content 
+
+    Return: 
+        list of contents (index, category, content name)
     """
     with open('./routers/indices.txt','rb') as f:
         indices = f.readlines()
@@ -52,4 +58,20 @@ async def similar_content(index: int, db:Session = Depends(get_db)):
         if(item is not None):
             result.append([idx, cat, item.name])
 
+    return result
+
+
+async def get_multiple_contents(idx_list, db:Session = Depends(get_db)):
+    """
+    Get information of multiple contents at once
+
+    return: 
+        list of contents (index, category, content name)
+    """
+    result = []
+    for idx in idx_list:
+        cat, item = await show_content(idx, db)
+        if(item is not None):
+            result.append([idx, cat, item.name])
+    
     return result
