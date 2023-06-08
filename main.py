@@ -67,6 +67,7 @@ def get_from_recommendls():
     movie = []
     drama = []
     book = []
+    webtoon = []
 
     for c in recommend_ls:
         title = contents_idx[str(c)]
@@ -81,12 +82,16 @@ def get_from_recommendls():
         if len(book) < 8:
             if title[-1] == "b":
                 book.append((str(c),title[:-1]))
+        if len(webtoon) < 8:
+            if title[-1] == "w":
+                webtoon.append((str(c),title[:-1]))
 
     os.chdir("../")
 
     return {'movie':movie,
             'drama':drama,
-            'book':book}
+            'book':book,
+            'webtoon':webtoon}
 
 def train_recbole():
     os.chdir("./RecBole")
@@ -109,6 +114,7 @@ def get_preference_form(request: Request):
     """
     return templates.TemplateResponse('preference.html', context={'request':request})
 
+
 @app.post('/preference')
 async def get_register_preference(request: Request, db:Session = Depends(get_db)):
     """
@@ -126,6 +132,7 @@ async def get_register_preference(request: Request, db:Session = Depends(get_db)
     #기존 데이터와 인덱스 충돌을 피하기 위해 3000을 더해서 사용
     update_dataset(id_plus3000(_id),indices) 
     train_recbole()
+
 
 @app.get("/")
 async def get_home(request: Request):
@@ -163,7 +170,6 @@ async def get_recommendation(request: Request):
         # execute_recbole(_id)
     else:
         execute_recbole()
-    
 
     data = get_from_recommendls()
     # print(data)
@@ -180,16 +186,17 @@ async def update_like(request: Request, db:Session = Depends(get_db)):
 async def get_content_page(request: Request, index: int, db: Session = Depends(get_db)):
     #유저 선호하는 리스트 가져와서, 현재 컨텐츠 페이지의 인덱스가 있는지 확인
     username = request.cookies.get('username')
-    preference = user.get_preference(username, db)
-
-    if preference != None and str(index) in preference:
-        clicked=1
-    else:
-        clicked=0
-
+    clicked=0
+    if(username is not None):
+        preference = user.get_preference(username, db)
+        if preference != None and str(index) in preference:
+            clicked=1
+        else:
+            clicked=0
     
     # get content from db
     category, content_info = await content.show_content(index, db)
+    print(category, content_info)
     similar = await content.similar_content(index,db)
     
     if content_info is None:
@@ -207,6 +214,9 @@ async def get_content_page(request: Request, index: int, db: Session = Depends(g
         content_info.writer = process_string_list(content_info.writer)
 
         return templates.TemplateResponse('content_book.html', context={'request':request, 'content':content_info, 'category':category, 'index':index, 'similar':json.dumps(similar)})
+
+    elif category=='w':
+        return templates.TemplateResponse('content_webtoon.html', context={'request':request, 'content':content_info, 'category':category, 'index':index, 'similar':json.dumps(similar)})
 
     else:
         return templates.TemplateResponse('error.html', context={'request':request})

@@ -178,6 +178,10 @@
                 </div>
             </div>
 
+            <h5>웹툰</h5>
+            <div id="webtoon-gallery" class="content-gallery">
+            </div>
+        
         </div>
     </div>
 
@@ -237,6 +241,9 @@
                 } else if (cat == 'b') {
                     item = make_element(content_data[i],'b');
                     item.appendTo("#book-gallery");
+                } else if (cat == 'w') {
+                    item = make_element(content_data[i],'b');
+                    item.appendTo("#webtoon-gallery");
                 }
             }
         };

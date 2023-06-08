@@ -43,6 +43,9 @@ function make_content_display(content_data) {
         } else if (cat == 'b') {
             item = make_element(content_data[i]);
             item.appendTo("#book-gallery");
+        } else if (cat == 'w') {
+            item = make_element(content_data[i]);
+            item.appendTo("#webtoon-gallery");
         }
     }
 };

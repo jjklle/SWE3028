@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html style="font-size: 16px;" lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords">
+    <meta name="description" content="">
+    <meta id="similar-contents" data-content="{{similar}}">
+
+    <title>{{content.name}}</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='css/content_movie.css') }}" media="screen">
+    <link rel="stylesheet" href="{{ url_for('static', path='css/content_movie.css') }}" media="screen">
+    <link rel="stylesheet" href="{{ url_for('static', path='css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', path='css/content-gallery.css') }}" />
+
+
+    <link id="u-theme-google-font" rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
+    <link id="u-page-google-font" rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i">
+
+
+    <meta property="og:title" content="Home">
+    <meta property="og:type" content="website">
+    <meta data-intl-tel-input-cdn-path="intlTelInput/">
+</head>
+
+<body class="u-body u-xl-mode" data-lang="en">
+    <header class="u-clearfix u-header u-header" id="sec-b032">
+        <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+
+
+
+            <nav class="u-menu u-menu-dropdown u-offcanvas u-menu-1">
+
+            </nav>
+
+
+        </div>
+    </header>
+    <section class="u-clearfix u-section-1" id="carousel_2202">
+        <div class="u-align-left u-border-3 u-border-grey-40 u-container-style u-expanded-width u-group u-group-1">
+            <div class="u-container-layout u-container-layout-1">
+                <img class="u-border-4 u-border-white u-image u-image-round u-radius-10 u-image-1"
+                    src="/static/img/image/{{index}}.jpg" alt="" data-image-width="853" data-image-height="1280">
+                <!-- title -->
+                <h2 class="u-custom-font u-font-montserrat u-text u-text-1">{{content.name}}</h2>
+                <p class="u-text u-text-grey-40 u-text-3"> {{content.duration}} ・ {{content.genre}}
+                </p>
+                <div class="u-container-style u-group u-white u-group-2">
+                    <!-- rating -->
+                    <div id="rating" class="u-container-layout u-container-layout-2"
+                        style="margin-left:-20px;padding-left:0px">평균
+                        &#9733;{{content.rating}}
+
+                        <button type="button" class="btn btn-dark" id="like" style="margin-left:20px;">좋아요</button>
+                        <script>
+                            const button = document.getElementById("like")
+                            const defaultColor = button.style.backgroundColor;
+                            var likeValue = "{{ like }}";
+                            if (likeValue == 1) {
+                                button.style.backgroundColor = 'green';
+                            }
+                            const data = { index: "{{index}}" };
+                            button.addEventListener('click',function () {
+                                if (button.style.backgroundColor == 'green') {
+                                    button.style.backgroundColor = defaultColor;
+                                    fetch('/like',{ method: 'POST',headers: { 'Content-Type': 'application/json' },body: JSON.stringify(data) })
+                                }
+                                else {
+                                    button.style.backgroundColor = 'green';
+                                    fetch('/like',{ method: 'POST',headers: { 'Content-Type': 'application/json' },body: JSON.stringify(data) })
+                                }
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- 
+    webtoon
+    name, platform, author, on(연재/완결), day(연재요일), duration(연재기간), description 
+-->
+
+    <section class="u-clearfix u-section-2" id="carousel_cb1d">
+        <div class="u-clearfix u-sheet u-valign-top u-sheet-1">
+            <div class="u-layout-grid u-list u-list-1">
+                <div class="u-repeater u-repeater-1">
+                    <div
+                        class="u-align-left u-border-2 u-border-grey-40 u-border-no-left u-border-no-right u-border-no-top u-container-align-center u-container-style u-list-item u-repeater-item u-shape-rectangle u-white u-list-item-1">
+                        <div id="info"
+                            class="u-container-layout u-similar-container u-valign-bottom u-container-layout-1">
+                            <h4 class="u-text u-text-1">기본 정보</h4>
+                            <p class="u-text u-text-2">{{content.original}}<br>{{content.duration}} ・
+                                {{content.genre}} ·
+                                {{content.age}}<br>
+                                <br>{{content.description}}
+                            </p>
+                            <br><br>
+                            <div id="platform" style="display:none">
+                                <h4 class="u-text u-text-1">감상 가능한 곳</h4>
+                                <p class="u-text u-text-2">{{content.platform}}
+
+                            </div>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div
+                        class="u-border-2 u-border-grey-40 u-border-no-left u-border-no-right u-border-no-top u-container-align-center u-container-style u-list-item u-repeater-item u-shape-rectangle u-white u-list-item-2">
+                        <div class="u-container-layout u-similar-container u-valign-bottom u-container-layout-2">
+                            <h4 class="u-text u-text-3">작가</h4>
+                            <p class="u-text u-text-4">{{content.author}}
+                            </p>
+                        </div>
+                    </div>
+                    <div
+                        class="u-border-2 u-border-grey-40 u-border-no-left u-border-no-right u-border-no-top u-container-align-center u-container-style u-list-item u-repeater-item u-shape-rectangle u-white u-list-item-3">
+                        <div class="u-container-layout u-similar-container u-valign-bottom u-container-layout-3">
+                            <h4 class="u-text u-text-5">비슷한 작품</h4>
+                            <br>
+                            <!-- content gallery -->
+                            <h5>영화</h5>
+                            <div id="movie-gallery" class="content-gallery">
+                                <div class="gallery-item">
+                                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}"
+                                            alt=""></a>
+                                </div>
+                                <div class="gallery-item">
+                                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}"
+                                            alt=""></a>
+                                </div>
+                                <div class="gallery-item">
+                                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}"
+                                            alt=""></a>
+                                </div>
+                                <div class="gallery-item">
+                                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}"
+                                            alt=""></a>
+                                </div>
+                                <div class="gallery-item">
+                                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}"
+                                            alt=""></a>
+                                </div>
+                                <div class="gallery-item">
+                                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}"
+                                            alt=""></a>
+                                </div>
+                            </div>
+
+
+                            <h5>드라마</h5>
+
+                            <div id="drama-gallery" class="content-gallery">
+                                <div class="gallery-item">
+                                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}"
+                                            alt=""></a>
+                                </div>
+                                <div class="gallery-item">
+                                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}"
+                                            alt=""></a>
+                                </div>
+                                <div class="gallery-item">
+                                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}"
+                                            alt=""></a>
+                                </div>
+                                <div class="gallery-item">
+                                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}"
+                                            alt=""></a>
+                                </div>
+                                <div class="gallery-item">
+                                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}"
+                                            alt=""></a>
+                                </div>
+                            </div>
+
+
+                            <h5>책</h5>
+
+                            <div id="book-gallery" class="content-gallery">
+                                <div class="gallery-item">
+                                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}"
+                                            alt=""></a>
+                                </div>
+                                <div class="gallery-item">
+                                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}"
+                                            alt=""></a>
+                                </div>
+                                <div class="gallery-item">
+                                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}"
+                                            alt=""></a>
+                                </div>
+                                <div class="gallery-item">
+                                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}"
+                                            alt=""></a>
+                                </div>
+                                <div class="gallery-item">
+                                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}"
+                                            alt=""></a>
+                                </div>
+                            </div>
+
+                            <h5>웹툰</h5>
+                            <div id="webtoon-gallery" class="content-gallery">
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script class="u-script" src="{{ url_for('static', path='js/jquery-1.9.1.min.js') }}"></script>
+    <script class="u-script" src="{{ url_for('static', path='js/content_movie.js') }}"></script>
+    <script src="{{ url_for('static', path='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', path='js/content-gallery.js') }}"></script>
+
+    <script>
+        $(function () {
+            // display similar contents
+            // similar: list of contents. each item has [idx, category, title]
+            var similar = $('#similar-contents').data('content');
+            make_content_display(similar);
+        });
+
+        var platform = "{{ content.platform }}";
+        if (platform !== "") {
+            $("#platform").css('display','block');
+        }
+
+
+    </script>
+
+</body>
+
+</html>

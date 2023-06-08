@@ -57,18 +57,18 @@
               const button = document.getElementById("like")
               const defaultColor = button.style.backgroundColor;
               var likeValue = "{{ like }}";
-              if(likeValue ==1){
-                button.style.backgroundColor='green';
+              if (likeValue == 1) {
+                button.style.backgroundColor = 'green';
               }
               const data = { index: "{{index}}" };
-              button.addEventListener('click',function(){
-                if(button.style.backgroundColor=='green'){
-                  button.style.backgroundColor=defaultColor;
-                  fetch('/like', {method: 'POST', headers: {'Content-Type': 'application/json' }, body: JSON.stringify(data)})
+              button.addEventListener('click',function () {
+                if (button.style.backgroundColor == 'green') {
+                  button.style.backgroundColor = defaultColor;
+                  fetch('/like',{ method: 'POST',headers: { 'Content-Type': 'application/json' },body: JSON.stringify(data) })
                 }
-                else{
-                  button.style.backgroundColor='green';
-                  fetch('/like', {method: 'POST', headers: {'Content-Type': 'application/json' }, body: JSON.stringify(data)})
+                else {
+                  button.style.backgroundColor = 'green';
+                  fetch('/like',{ method: 'POST',headers: { 'Content-Type': 'application/json' },body: JSON.stringify(data) })
                 }
               });
             </script>
@@ -176,6 +176,12 @@
                   <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}" alt=""></a>
                 </div>
               </div>
+
+              <h5>웹툰</h5>
+              <div id="webtoon-gallery" class="content-gallery">
+              </div>
+
+
             </div>
           </div>
         </div>
@@ -189,12 +195,12 @@
 
   <script>
     $(function () {
-        // display similar contents
-        // similar: list of contents. each item has [idx, category, title]
-        var similar = $('#similar-contents').data('content');
+      // display similar contents
+      // similar: list of contents. each item has [idx, category, title]
+      var similar = $('#similar-contents').data('content');
 
-        make_content_display(similar);
-      });
+      make_content_display(similar);
+    });
 
     var platform = "{{ content.platform }}";
     if (platform !== "") {

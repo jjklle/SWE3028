@@ -138,13 +138,13 @@ class WEBTOON(Base):
     age = Column(TEXT)
     description = Column(TEXT)
     
-    def __init__(self, webtoon_index, name, illustration, illustration_author, rating, original, author, genre, on, day, duration, age, description):
+    def __init__(self, webtoon_index, name, platform, illustration, illustration_author, rating, original, author, genre, on, day, duration, age, description):
 
         self.webtoon_index = webtoon_index
         self.name = name
         self.illustration = illustration
+        self.platform = platform
         self.illustration_author = illustration_author
-        self.casting = casting
         self.rating = rating
         self.original = original
         self.author = author

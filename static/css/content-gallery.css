@@ -1,8 +1,8 @@
 .content-gallery{
     display: flex;
-    /* margin:10px; */
     flex-direction: row;
     flex-wrap: wrap;
+    margin-bottom:20px;
 }
 .gallery-item{
     width:150px;
