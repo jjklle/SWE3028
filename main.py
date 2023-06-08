@@ -113,10 +113,9 @@ async def get_register_preference(request: Request, db:Session = Depends(get_db)
         indices=None
     username = request.cookies.get('username')
 
-    # id가 불러와지지 않음
     _id = request.cookies.get('id')
-    print(username)
-    print(_id)
+    # print(username)
+    # print(_id)
     user.put_preference(username,indices,db)
     #기존 데이터와 인덱스 충돌을 피하기 위해 3000을 더해서 사용
     update_dataset(id_plus3000(_id),indices) 
@@ -141,9 +140,8 @@ async def get_recommendation(request: Request):
     - access_token
     - id: index of user in db
     - username: user id
-    - is_login
+    - is_login: "True" or undefined
     """
-    # need to fix: 회원가입시 cookie에서 id가 가져와지지 않는 문제가 있음.
 
 
     is_login = request.cookies.get('is_login')

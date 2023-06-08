@@ -181,10 +181,11 @@ async def create_user(username: str = Form(...), password: str = Form(...), emai
         new_user = User(username , hash_password , email)
         db.add(new_user)
         db.commit()
-        # return access token
+        # need to find the generated id and return with token
+        user = db.query(User).filter_by(user_id=username).first()
         expire = timedelta(minutes=TOKEN_EXPIRE_MIN)
         token = create_access_token(username, expire)
-        return {"token": token}
+        return {"id": user.id, "token": token}
     
 
 @router.delete("/user/{_user_id}")
