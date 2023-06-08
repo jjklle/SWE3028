@@ -196,7 +196,8 @@ async def get_content_page(request: Request, index: int, db: Session = Depends(g
     
     # get content from db
     category, content_info = await content.show_content(index, db)
-    print(category, content_info)
+    #print(content_info)
+    #print(category, content_info)
     similar = await content.similar_content(index,db)
     
     if content_info is None:

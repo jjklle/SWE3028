@@ -23,18 +23,22 @@ async def show_content(index: int, db:Session = Depends(get_db)):
     """
     return: category(m,t,b,w), content info (depends on db schema)
     """
+
     name = contents_idx[str(index)][:-1]
     cat = contents_idx[str(index)][-1]
+    print(cat== 'w')
     try:
         if cat == 'm':
             content = db.query(MOVIE).filter(MOVIE.name == name).first()
+            
         elif cat == 't':
             content = db.query(TV).filter(TV.name == name).first()
         elif cat == 'b':
             content = db.query(BOOK).filter(BOOK.name == name).first()
         elif cat == 'w':
-            content = db.query(WEBTOON).filter(WEBTOON.name ==name).first()
-    except:
+            content = db.query(WEBTOON).filter(WEBTOON.name == name).first()
+    except Exception as e :
+        #print(e)
         content=None
     return cat, content
 
