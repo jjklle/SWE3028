@@ -104,10 +104,16 @@ def train_recbole():
 
 @app.get('/register/preference')
 def get_preference_form(request: Request):
+    """
+    Display preference page (only on registration)
+    """
     return templates.TemplateResponse('preference.html', context={'request':request})
 
 @app.post('/preference')
 async def get_register_preference(request: Request, db:Session = Depends(get_db)):
+    """
+    Get data from preference page and train model
+    """
     indices = await request.json()
     if len(indices)==0:
         indices=None
@@ -127,8 +133,13 @@ async def get_home(request: Request):
 
 
 @app.get("/mypage")
-async def get_home(request: Request):
-    return templates.TemplateResponse('mypage.html', context={'request':request})
+async def get_home(request: Request, db:Session = Depends(get_db)):
+    username = request.cookies.get('username')
+    preference_idx = user.get_preference(username, db) # index only
+
+    preference = await content.get_multiple_contents(preference_idx, db) # list of content info
+
+    return templates.TemplateResponse('mypage.html', context={'request':request, "preference":json.dumps(preference)})
 
 
 @app.post("/recommend")

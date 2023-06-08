@@ -50,8 +50,9 @@ def get_db():
     finally:
         db.close()
 
-# 선호도 처리하는 함수들
-
+"""
+선호도 처리하는 함수들
+"""
 def get_preference(username:str, db):
     user = db.query(User).filter(User.user_id == username).first()
     if user.preference == None:
@@ -61,6 +62,8 @@ def get_preference(username:str, db):
     print(preference)
     return preference
 
+
+
 def put_preference(username:str, preference: list, db):
     if preference==None:
         updated_preference=None
@@ -68,6 +71,8 @@ def put_preference(username:str, preference: list, db):
         updated_preference = ", ".join(preference)
     user = db.query(User).filter(User.user_id == username).update({'preference': updated_preference})
     db.commit()
+
+
 
 def update_preference(username:str, index:str, db):
     preference = get_preference(username,db)
@@ -188,12 +193,12 @@ async def create_user(username: str = Form(...), password: str = Form(...), emai
         return {"id": user.id, "token": token}
     
 
-@router.delete("/user/{_user_id}")
-async def delete_user(_user_id: int, db: Session = Depends(get_db)):
-    user = db.query(User).filter_by(user_id=_user_id).first()
+@router.delete("/user/{username}")
+async def delete_user(username: str, db: Session = Depends(get_db)):
+    user = db.query(User).filter_by(user_id=username).first()
     if user is None:
         raise HTTPException(status_code=404, detail="User not found")
 
     db.delete(user)
     db.commit()
-    return {"message": "User deleted successfully"}
+    return {"message": "회원 탈퇴가 완료되었습니다."}

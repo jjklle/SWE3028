@@ -47,11 +47,4 @@ function make_content_display(content_data) {
     }
 };
 
-$(function () {
-    // display similar contents
-    // similar: list of contents. each item has [idx, category, title]
-    var similar = $('#similar-contents').data('content');
-    console.log(similar);
 
-    make_content_display(similar);
-});

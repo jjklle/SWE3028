@@ -8,6 +8,9 @@
     <title>마이페이지</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta id="preference" data-content="{{preference}}">
+
     <link rel="stylesheet" href="">
     <link rel="stylesheet" href="{{ url_for('static', path='fontawesome-5.5/css/all.min.css') }}" />
     <link rel="stylesheet" href="{{ url_for('static', path='slick/slick.css') }}">
@@ -57,81 +60,132 @@
 <body>
 
     <!-- Navigation -->
-<nav class="navbar navbar-expand-md tm-navbar scroll" id="tmNav">
-    <div class="container">
-        <div class="tm-next">
-            <a href="/" class="navbar-brand">TITLE</a>
-        </div>
+    <nav class="navbar navbar-expand-md tm-navbar scroll" id="tmNav">
+        <div class="container">
+            <div class="tm-next">
+                <a href="/" class="navbar-brand">TITLE</a>
+            </div>
 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <i class="fas fa-bars navbar-toggler-icon"></i>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav">
-                <div class="navbar-nav item">
-                    <li class="nav-item">
-                        <a class="nav-link tm-nav-link" href="/#movie">영화</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link tm-nav-link" href="/#drama">드라마</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link tm-nav-link" href="/#book">책</a>
-                    </li>
-                </div>
-
-                <!-- search bar -->
-                <div class="navbar-nav item">
-                    <input id="search-input" type="search" placeholder="검색어를 입력하세요" aria-describedby="" class="form-control"
-                        style="width:300px;background-color: transparent;margin:5px 3px 0 0;">
-                    <div class="input-group-append">
-                        <button id="search-btn" type="submit" class="btn btn-light"
-                            style="padding:0 15px;height:45px;margin-top:5px;"> <i class="fa fa-search"> </i> </button>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-bars navbar-toggler-icon"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav">
+                    <div class="navbar-nav item">
+                        <li class="nav-item">
+                            <a class="nav-link tm-nav-link" href="/#movie">영화</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link tm-nav-link" href="/#drama">드라마</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link tm-nav-link" href="/#book">책</a>
+                        </li>
                     </div>
 
-                    <!-- 로그인 회원가입 -->
-                    <div class="navbar-nav item"></div>
-                    <li class="nav-item">
-                    </li>
-                    <li>
-                    </li>
-                </div>
+                    <!-- search bar -->
+                    <div class="navbar-nav item">
+                        <input id="search-input" type="search" placeholder="검색어를 입력하세요" aria-describedby=""
+                            class="form-control" style="width:300px;background-color: transparent;margin:5px 3px 0 0;">
+                        <div class="input-group-append">
+                            <button id="search-btn" type="submit" class="btn btn-light"
+                                style="padding:0 15px;height:45px;margin-top:5px;"> <i class="fa fa-search"> </i>
+                            </button>
+                        </div>
 
-                <div class="dropdown"><img src="/static/img/icons8-user-64.png" alt="User Image" id="user-image"
-                        href="#" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true"
-                        aria-expanded="false">
-                </div>
-            </ul>
+                        <!-- 로그인 회원가입 -->
+                        <div class="navbar-nav item"></div>
+                        <li class="nav-item">
+                        </li>
+                        <li>
+                        </li>
+                    </div>
+
+                    <div class="dropdown"><img src="/static/img/icons8-user-64.png" alt="User Image" id="user-image"
+                            href="#" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true"
+                            aria-expanded="false">
+                    </div>
+                </ul>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
 
     <div class="content">
         <div class="top-image">
 
         </div>
         <div class="user-content">
-            <h3>User</h3>
+            <h3 id="username">User</h3>
             <br>
             <h5>좋아요 한 컨텐츠</h5>
-            <div class="content-gallery">
+            <br>
+
+            <!-- content gallery -->
+            <h5>영화</h5>
+            <div id="movie-gallery" class="content-gallery">
                 <div class="gallery-item">
-                    <img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}" alt="">
+                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}" alt=""></a>
                 </div>
                 <div class="gallery-item">
-                    <img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}" alt="">
+                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}" alt=""></a>
                 </div>
                 <div class="gallery-item">
-                    <img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}" alt="">
+                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}" alt=""></a>
                 </div>
                 <div class="gallery-item">
-                    <img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}" alt="">
+                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}" alt=""></a>
                 </div>
                 <div class="gallery-item">
-                    <img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}" alt="">
+                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}" alt=""></a>
+                </div>
+                <div class="gallery-item">
+                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}" alt=""></a>
                 </div>
             </div>
+
+
+            <h5>드라마</h5>
+
+            <div id="drama-gallery" class="content-gallery">
+                <div class="gallery-item">
+                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}" alt=""></a>
+                </div>
+                <div class="gallery-item">
+                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}" alt=""></a>
+                </div>
+                <div class="gallery-item">
+                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}" alt=""></a>
+                </div>
+                <div class="gallery-item">
+                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}" alt=""></a>
+                </div>
+                <div class="gallery-item">
+                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}" alt=""></a>
+                </div>
+            </div>
+
+
+            <h5>책</h5>
+
+            <div id="book-gallery" class="content-gallery">
+                <div class="gallery-item">
+                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}" alt=""></a>
+                </div>
+                <div class="gallery-item">
+                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}" alt=""></a>
+                </div>
+                <div class="gallery-item">
+                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}" alt=""></a>
+                </div>
+                <div class="gallery-item">
+                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}" alt=""></a>
+                </div>
+                <div class="gallery-item">
+                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}" alt=""></a>
+                </div>
+            </div>
+
             <div class="bottom">
                 <div class="link"><a href="#" id="logout">로그아웃</a></div>
                 <div class="link"><a href="#" id="delete">회원 탈퇴</a></div>
@@ -141,37 +195,58 @@
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/latest/js.cookie.min.js"
-    integrity="sha512-iewyUmLNmAZBOOtFnG+GlGeGudYzwDjE1SX3l9SWpGUs0qJTzdeVgGFeBeU7/BIyOZdDy6DpILikEBBvixqO9Q=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        integrity="sha512-iewyUmLNmAZBOOtFnG+GlGeGudYzwDjE1SX3l9SWpGUs0qJTzdeVgGFeBeU7/BIyOZdDy6DpILikEBBvixqO9Q=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script class="u-script" src="{{ url_for('static', path='js/jquery-1.9.1.min.js') }}"></script>
     <script src="{{ url_for('static', path='js/bootstrap.min.js') }}"></script>
     <script src="{{ url_for('static', path='js/search.js') }}"></script>
+    <script src="{{ url_for('static', path='js/content-gallery.js') }}"></script>
+
     <script>
+        // display username
+        username = Cookies.get('username')
+        $("#username").text(username);
+
+        // display liked contents    
+        $(function () {
+            var liked = $('#preference').data('content');
+            console.log(liked);
+            make_content_display(liked);
+        });
+
         // logout
-        $("#logout").on('click',()=>{
+        $("#logout").on('click',() => {
             Cookies.remove('access_token');
             Cookies.remove('id');
             Cookies.remove('username');
             Cookies.remove('is_login');
             //redirect
-            window.location.href="/";
+            window.location.href = "/";
         });
-        
+
 
         // 회원 탈퇴
-        $("#delete").on('click', async function() {
+        $("#delete").on('click',async function () {
             if (confirm("탈퇴하시겠습니까?")) {
                 // yes
                 // 서버에 요청
                 user_id = Cookies.get('username');
-                const response = await fetch('/user/' + user_id, { method: 'DELETE'});
+                const response = await fetch('/user/' + user_id,{ method: 'DELETE' });
 
                 if (!response.ok) {
                     // something went wrong...
                 }
                 else {
                     const data = await response.json();
-                    alert(data);
+                    alert(data.message);
+                    
+                    // delete login session and return to index page
+                    Cookies.remove('access_token');
+                    Cookies.remove('id');
+                    Cookies.remove('username');
+                    Cookies.remove('is_login');
+
+                    window.location.href='/';
                 }
 
             } else {

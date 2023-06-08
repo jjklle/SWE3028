@@ -184,6 +184,13 @@
     <script src="{{ url_for('static', path='js/content-gallery.js') }}"></script>
 
     <script>
+    $(function () {
+        // display similar contents
+        // similar: list of contents. each item has [idx, category, title]
+        var similar = $('#similar-contents').data('content');
+
+        make_content_display(similar);
+    });
 
     </script>
 
