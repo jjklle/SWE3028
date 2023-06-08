@@ -16,6 +16,7 @@ content {
 	max-width: 800px;
 	text-align: center;
 	border-radius: 20px;
+  padding-bottom:30px;
 }
 
 header{
@@ -31,6 +32,7 @@ header{
 #submit{
 	background-color: #3ba725;
 	color:white;
+  margin-top:20px;
 }
 
 .gallery{

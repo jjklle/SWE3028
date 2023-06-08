@@ -217,6 +217,8 @@ async def get_content_page(request: Request, index: int, db: Session = Depends(g
         return templates.TemplateResponse('content_book.html', context={'request':request, 'content':content_info, 'category':category, 'index':index, 'similar':json.dumps(similar)})
 
     elif category=='w':
+        # platform
+        content_info.platform = process_string_list(content_info.platform)
         return templates.TemplateResponse('content_webtoon.html', context={'request':request, 'content':content_info, 'category':category, 'index':index, 'similar':json.dumps(similar)})
 
     else:

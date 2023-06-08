@@ -27,11 +27,7 @@ $(document).ready(function () {
         // move to index page
         // send information to the server
     });
-    // 다음페이지는 없어도 될 것 같습니다.
-    // next button->load more contents
-    // and save the information temporarily
-    $('#next').click(function () {
-    });
+
 });
 
 

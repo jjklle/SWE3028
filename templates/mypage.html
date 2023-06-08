@@ -18,6 +18,8 @@
     <link rel="stylesheet" href="{{ url_for('static', path='magnific-popup/magnific-popup.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', path='css/bootstrap.min.css') }}" />
     <link rel="stylesheet" href="{{ url_for('static', path='css/navbar.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', path='css/content-gallery.css') }}" />
+
     <style>
     .content{
         display:block;
@@ -31,19 +33,7 @@
         margin:0 auto 30px;
         border-radius: 10%;
     }
-    .content-gallery{
-        display: flex;
-        margin:auto;
-        flex-direction: row;
-        flex-wrap: wrap;
-    }
-    .gallery-item{
-        width:150px;
-        margin: 10px;
-    }
-    img{
-        width:100%;
-    }
+    
 
     .bottom{
         display:flex;
@@ -63,7 +53,7 @@
     <nav class="navbar navbar-expand-md tm-navbar scroll" id="tmNav">
         <div class="container">
             <div class="tm-next">
-                <a href="/" class="navbar-brand">TITLE</a>
+                <a href="/" class="navbar-brand">5G</a>
             </div>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -81,6 +71,9 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link tm-nav-link" href="/#book">책</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link tm-nav-link" href="/#webtoon">웹툰</a>
                         </li>
                     </div>
 
@@ -124,66 +117,15 @@
             <!-- content gallery -->
             <h5>영화</h5>
             <div id="movie-gallery" class="content-gallery">
-                <div class="gallery-item">
-                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}" alt=""></a>
-                </div>
-                <div class="gallery-item">
-                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}" alt=""></a>
-                </div>
-                <div class="gallery-item">
-                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}" alt=""></a>
-                </div>
-                <div class="gallery-item">
-                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}" alt=""></a>
-                </div>
-                <div class="gallery-item">
-                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}" alt=""></a>
-                </div>
-                <div class="gallery-item">
-                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}" alt=""></a>
-                </div>
             </div>
 
-
             <h5>드라마</h5>
-
             <div id="drama-gallery" class="content-gallery">
-                <div class="gallery-item">
-                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}" alt=""></a>
-                </div>
-                <div class="gallery-item">
-                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}" alt=""></a>
-                </div>
-                <div class="gallery-item">
-                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}" alt=""></a>
-                </div>
-                <div class="gallery-item">
-                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}" alt=""></a>
-                </div>
-                <div class="gallery-item">
-                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}" alt=""></a>
-                </div>
             </div>
 
 
             <h5>책</h5>
-
             <div id="book-gallery" class="content-gallery">
-                <div class="gallery-item">
-                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}" alt=""></a>
-                </div>
-                <div class="gallery-item">
-                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}" alt=""></a>
-                </div>
-                <div class="gallery-item">
-                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}" alt=""></a>
-                </div>
-                <div class="gallery-item">
-                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}" alt=""></a>
-                </div>
-                <div class="gallery-item">
-                    <a href="#"><img src="{{ url_for('static', path='img/gallery-img-01.jpg') }}" alt=""></a>
-                </div>
             </div>
 
             <h5>웹툰</h5>

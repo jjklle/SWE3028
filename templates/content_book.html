@@ -9,11 +9,12 @@
     <meta id="similar-contents" data-content="{{similar}}">
 
     <title>{{content.name}}</title>
+  <link rel="stylesheet" href="{{ url_for('static', path='fontawesome-5.5/css/all.min.css') }}" />
     <link rel="stylesheet" href="{{ url_for('static', path='css/content_movie.css') }}" media="screen">
     <link rel="stylesheet" href="{{ url_for('static', path='css/content_movie.css') }}" media="screen">
     <link rel="stylesheet" href="{{ url_for('static', path='css/bootstrap.min.css') }}" />
     <link rel="stylesheet" href="{{ url_for('static', path='css/content-gallery.css') }}" />
-
+    <link rel="stylesheet" href="{{ url_for('static', path='css/navbar.css') }}" />
 
 
     <link id="u-theme-google-font" rel="stylesheet"
@@ -28,18 +29,56 @@
 </head>
 
 <body class="u-body u-xl-mode" data-lang="en">
-    <header class="u-clearfix u-header u-header" id="sec-b032">
-        <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
-
-
-
-            <nav class="u-menu u-menu-dropdown u-offcanvas u-menu-1">
-
-            </nav>
-
-
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-md tm-navbar scroll" id="tmNav">
+        <div class="container">
+            <div class="tm-next">
+                <a href="/" class="navbar-brand">5G</a>
+            </div>
+    
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-bars navbar-toggler-icon"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav">
+                    <div class="navbar-nav item">
+                        <li class="nav-item">
+                            <a class="nav-link tm-nav-link" href="/#movie">영화</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link tm-nav-link" href="/#drama">드라마</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link tm-nav-link" href="/#book">책</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link tm-nav-link" href="/#webtoon">웹툰</a>
+                        </li>
+                    </div>
+    
+                    <!-- search bar -->
+                    <div class="navbar-nav item">
+                        <input id="search-input" type="search" placeholder="검색어를 입력하세요" aria-describedby=""
+                            class="form-control" style="width:300px;background-color: transparent;margin:5px 3px 0 0;">
+                        <div class="input-group-append">
+                            <button id="search-btn" type="submit" class="btn btn-light"
+                                style="padding:0 15px;height:45px;margin-top:5px;"> <i class="fa fa-search"> </i>
+                            </button>
+                        </div>
+    
+                        <!-- 로그인 회원가입 -->
+                        <div class="navbar-nav item"></div>
+                        <li class="nav-item">
+                        </li>
+                        <li>
+                        </li>
+                    </div>
+                </ul>
+            </div>
         </div>
-    </header>
+    </nav>
+    
     <section class="u-clearfix u-section-1" id="carousel_2202">
         <div class="u-align-left u-border-3 u-border-grey-40 u-container-style u-expanded-width u-group u-group-1">
             <div class="u-container-layout u-container-layout-1">
@@ -52,9 +91,10 @@
                 <div class="u-container-style u-group u-white u-group-2">
                     <!-- rating -->
                     <div id="rating" class="u-container-layout u-container-layout-2"
-                        style="margin-left:-20px;padding-left:0px">평균 &#9733;{{content.rating}}
+                        style="margin-left:-20px;padding-left:0px">
+                        <!-- 평균 &#9733;{{content.rating}} -->
 
-                        <button type="button" class="btn btn-dark" id="like" style="margin-left:20px;">좋아요</button>
+                        <button type="button" class="btn btn-dark" id="like">좋아요</button>
                     </div>
                 </div>
             </div>
