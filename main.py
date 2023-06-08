@@ -35,16 +35,16 @@ templates = Jinja2Templates(directory='templates')
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 def id_plus3000(id):
-    return str(int(id)+3000)
+    return str(int(id)+2865-155)
 
 
 def update_dataset(id, item_ls):
-    path = './RecBole/dataset/contents/contents_test.inter'
+    path = './RecBole/dataset/contents/contents.inter'
     with open(path,'a') as f:
         for item in item_ls:
             f.write(str(id)+'\t'+str(item)+'\n')
 
-def execute_recbole(user_id=2864):
+def execute_recbole(user_id=2865):
     # 로그인 없이 처음 실행 시 default user id 2865로 실행
     # return type: dictionary 
 
@@ -148,8 +148,8 @@ async def get_recommendation(request: Request):
     if(is_login=="True"):
         _id = request.cookies.get('id')
         print("id: ", _id)
-        # execute_recbole(id_plus3000(_id))
-        execute_recbole(_id)
+        execute_recbole(id_plus3000(_id))
+        # execute_recbole(_id)
     else:
         execute_recbole()
     

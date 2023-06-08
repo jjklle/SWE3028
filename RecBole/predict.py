@@ -23,7 +23,7 @@ import argparse
 def load_example(user_id):
     # Filtered dataset and split dataloaders are created according to 'config'.
     config, model, dataset, train_data, valid_data, test_data = load_data_and_model(
-        model_file="./saved/BPR_add2865.pth",
+        model_file="./saved/BPR.pth",
     )
     # user_ls = [i for i in range(1,2887)]
     topk_score, topk_iid_list = full_sort_topk([user_id], model, test_data, k=10000, device=config['device'])
